@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pregled korisnika</title>
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="js/korisnici.js"></script>
+</head>
+<body>
+<h3>Korisnici:</h3>
+	<table border="1" id="korisnikTable">
+		<tr bgcolor="lightblue">
+			<th><a id="id">ID</a></th>
+			<th><a id="sortKorisnickoIme">Korisnicko ime</a></th>
+			<th><a>Datum registracije</a></a></th>
+			<th><a id="sortUloga">Uloga</a></th>
+			<th/>
+		</tr>
+		<tr bgcolor="lightblue">
+			<td align="center"><input type="text" id="korisnikID"></td>
+			<td align="center"><input type="text" id="korisnikInput"></td>
+			<td align="center"><input type="text" id="datumRegInput"></td>
+			<td align="center"><input type="text" id="filterUlogaCmb"></td>
+		</tr>
+	</table>
+	<p><a href="aplikacija.html">Povratak</a></p>
+	<p><a href="" id="logoutLink">Odjava</a></p>
+</body>
+</html>

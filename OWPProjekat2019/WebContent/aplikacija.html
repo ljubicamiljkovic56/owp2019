@@ -1,0 +1,55 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bioskop</title>
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="js/aplikacija.js"></script>
+</head>
+<body>
+<h3>Filmovi:</h3>
+	<table border="1" id="filmTable">
+		<tr bgcolor="lightblue">
+		<!-- film ima id, naziv, resizer, glumci, zanrovi, trajanje, distributer, zemlja porekla, godina proizvodnje, opis -->
+<!-- 			<th><a id="sortId">Id</a></th> -->
+			<th><a id="sortNaziv">Naziv</a></th>
+			<th><a id="sortReziser">Reziser</a></th>
+			<th><a id="sortGlumci">Glumci</a></th>
+			<th><a id="sortZanrovi">Zanrovi</a></th>
+			<th><a id="sortTrajanje">Trajanje</a></th>
+			<th><a id="sortDistributer">Distributer</a></th>
+			<th><a id="sortZemljaPorekla">Zemlja porekla</a></th>
+			<th><a id="sortGodinaProizvodnje">Godina proizvodnje</a></th>
+			<th><a id="sortOpis">Opis</a></th>
+			<th/>
+		</tr>
+		<tr bgcolor="lightblue">
+<!-- 			<td align="center"><input type="text" id="filterId"></td> -->
+			<td align="center"><input type="text" id="filterNazivInput"></td>
+			<td align="center"><input type="text" id="filterReziserInput"></td>
+			<td align="center"><input type="text" id="filterGlumciInput"></td>
+			<td align="center"><input type="text" id="filterZanroviInput"></td>
+			<td align="center"><input type="text" id="filterTrajanjeInput"></td>
+			<td align="center"><input type="text" id="filterDistributerInput"></td>
+			<td align="center"><input type="text" id="filterZemljaPoreklaInput"></td>
+			<td align="center"><input type="text" id="filterGodinaProizvodnjeInput"></td>
+			<td align="center"><input type="text" id="filterOpisInput"></td>
+			<td/>
+		</tr>
+		<!-- <tr>
+			<td>
+				<form>
+					<input type="submit" id="deleteSubmit" value="Obrisi">
+				</form>
+			</td>
+		</tr> -->
+
+	
+	</table>
+		<p id="adminParagraph">
+<!-- 		<a href="dodajfilm.html">Dodavanje filma</a> -->
+	</p>
+	
+	<p><a href="index.html">Nazad na pocetnu stranu</a></p>
+	<p><a href="" id="logoutLink">Odjava</a></p>
+</body>
+</html>
