@@ -81,6 +81,11 @@ $(document).ready(function(){
 				adminParagraph.empty();
 				if(data.ulogovanKorisnikUloga == 'admin'){
 					$('#adminParagraph').append('<a href="dodajfilm.html">Dodavanje filma</a>');
+					$('#adminParagraph').append('<p></p>');
+					$('#adminParagraph').append('<a href="dodajprojekciju.html">Dodavanje projekcije</a>');
+					$('#adminParagraph').append('<p></p>');
+					$('#adminParagraph').append('<a href="korisnici.html">Pregled korisnika</a>');
+					
 				}
 			}
 		});

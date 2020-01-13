@@ -14,7 +14,6 @@ public class Korisnik {
 	
 	
 	public Korisnik(int id, String korisnickoIme, String lozinka, Date datumReg, Uloga uloga) {
-		super();
 		this.id = id;
 		this.korisnickoIme = korisnickoIme;
 		this.lozinka = lozinka;
@@ -23,7 +22,17 @@ public class Korisnik {
 	}
 	
 	
-	
+	public Korisnik(String korisnickoIme, String lozinka, Date datumReg, Uloga uloga) {
+		this.korisnickoIme = korisnickoIme;
+		this.lozinka = lozinka;
+		this.datumReg = datumReg;
+		this.uloga = uloga;
+	}
+
+
+
+
+
 	public int getId() {
 		return id;
 	}

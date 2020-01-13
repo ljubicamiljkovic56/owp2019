@@ -1,9 +1,12 @@
 package owp.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +15,7 @@ import owp.model.Korisnik.Uloga;
 
 public class KorisnikDAO {
 	
+	//pri logovanju, poziva se u LoginServletu
 	public static Korisnik get(String korisnickoIme, String lozinka) {
 		Connection conn = ConnectionManager.getConnection();
 
@@ -33,9 +37,7 @@ public class KorisnikDAO {
 				int id = rset.getInt("id");
 				String korisnickoIme1 = rset.getString("korisnickoIme");
 				String lozinka1 = rset.getString("lozinka");
-				String datumRegString = rset.getString("datumReg");
-				SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
-				java.sql.Date datumReg = new java.sql.Date(sdf.parse(datumRegString).getTime());
+				Date datumReg = rset.getDate("datumReg");
 				Uloga uloga = Uloga.valueOf(rset.getString("uloga"));
 
 				return new Korisnik(id, korisnickoIme1,lozinka1, datumReg, uloga);
@@ -51,6 +53,7 @@ public class KorisnikDAO {
 		return null;
 	}
 	
+	//get id u servletu se koristi pre update-a
 	public static Korisnik get(int id) {
 		Connection conn = ConnectionManager.getConnection();
 
@@ -70,9 +73,7 @@ public class KorisnikDAO {
 				int id1 = rset.getInt(index++);
 				String korisnickoIme = rset.getString(index++);
 				String lozinka = rset.getString(index++);
-				String datumRegString = rset.getString("datumReg");
-				SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
-				java.sql.Date datumReg = new java.sql.Date(sdf.parse(datumRegString).getTime());
+				Date datumReg = rset.getDate("datumReg");
 				Uloga uloga = Uloga.valueOf(rset.getString(index++));
 				
 
@@ -89,6 +90,8 @@ public class KorisnikDAO {
 		return null;
 	}
 	
+	//get po korisnickom imenu kod provere da li vec postoji korisnicko ime pri registraciji
+	// i pri logovanju
 	public static Korisnik get(String korisnickoIme) {
 		Connection conn = ConnectionManager.getConnection();
 
@@ -107,9 +110,7 @@ public class KorisnikDAO {
 				int index = 1;
 				int id = rset.getInt(index++);
 				String lozinka = rset.getString(index++);
-				String datumRegString = rset.getString("datumReg");
-				SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
-				java.sql.Date datumReg = new java.sql.Date(sdf.parse(datumRegString).getTime());
+				Date datumReg = rset.getDate("datumReg");
 				Uloga uloga = Uloga.valueOf(rset.getString(index++));
 
 				return new Korisnik(id, korisnickoIme,lozinka,datumReg,uloga);
@@ -124,37 +125,8 @@ public class KorisnikDAO {
 
 		return null;
 	}
-//
-//	public static List<Korisnik> getAll() {
-//		ArrayList<Korisnik> korisnici = new ArrayList<Korisnik>();
-//		String query = "SELECT id, korisnickoIme, lozinka, datumReg, uloga FROM korisnik";
-//
-//		Connection conn = ConnectionManager.getConnection();
-//		
-//		PreparedStatement pstmt;
-//		try {
-//			pstmt = conn.prepareStatement(query);
-//
-//			ResultSet rset = pstmt.executeQuery();
-//			
-//			if (rset.next()) {
-//				int index = 1;
-//				int id = rset.getInt(index++);
-//				String lozinka = rset.getString(index++);
-//				String datumRegString = rset.getString("datumReg");
-//				SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
-//				java.sql.Date datumReg = new java.sql.Date(sdf.parse(datumRegString).getTime());
-//				Uloga uloga = Uloga.valueOf(rset.getString(index++));
-//
-//				return (List<Korisnik>) new Korisnik(id, korisnickoIme,lozinka,datumReg,uloga);
-//			}
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return korisnici;
-//	}
-//	
+
+	//prikaz svih korisnika kod admina
 	public static List<Korisnik> getAll(){
 		List<Korisnik> korisnici = new ArrayList<>();
 		
@@ -174,9 +146,7 @@ public class KorisnikDAO {
 				int id1 = rset.getInt("id");
 				String korisnickoIme1 = rset.getString("korisnickoIme");
 				String lozinka1 = rset.getString("lozinka");
-				String datumRegString = rset.getString("datumReg");
-				SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
-				java.sql.Date datumReg1 = new java.sql.Date(sdf.parse(datumRegString).getTime());
+				Date datumReg1 = rset.getDate("datumReg");
 				Uloga uloga1 = Uloga.valueOf(rset.getString("uloga"));
 		
 				Korisnik korisnik = new Korisnik(id1, korisnickoIme1, lozinka1, datumReg1, uloga1);
@@ -186,6 +156,8 @@ public class KorisnikDAO {
 				korisnik.setDatumReg(datumReg1);
 				korisnik.setUloga(uloga1);
 				korisnici.add(korisnik);
+				
+				
 			}
 			
 		}catch (Exception ex) {
@@ -198,25 +170,44 @@ public class KorisnikDAO {
 		return korisnici;
 		
 	}
+	//poslednji dodati id u bazi
+	protected static int getInsertedId(Connection conn) throws SQLException {
+		String query = "SELECT last_insert_rowid();";
+		Statement stmt = conn.createStatement();
+		ResultSet rset = stmt.executeQuery(query);
+		int retVal = -1;
+		if (rset.next())
+			retVal = rset.getInt(1);
+		rset.close();
+		stmt.close();
+		return retVal;
+	}
 	
+	//registracija, tj dodavanje korisnika
 	public static boolean add(Korisnik korisnik) {
 		Connection conn = ConnectionManager.getConnection();
-
+		
+		boolean retVal = false;
+		
 		PreparedStatement pstmt = null;
 		try {
-			String query = "INSERT INTO korisnici (korisnickoIme, lozinka, datumReg, uloga) "
-					+ "VALUES (?, ?, ?)";
+			String query = "INSERT INTO korisnik (korisnickoIme, lozinka, datumReg, uloga) "
+					+ "VALUES (?, ?, ?, ?)";
 
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
 			pstmt.setString(index++, korisnik.getKorisnickoIme());
-			pstmt.setString(index++, korisnik.getLozinka());
+			pstmt.setString(index++, korisnik.getLozinka());			
 			pstmt.setDate(index++, korisnik.getDatumReg());
-			pstmt.setString(index++, Uloga.korisnik.toString());
-			
+			pstmt.setString(index++, korisnik.getUloga().toString());
 			System.out.println(pstmt);
 
-			return pstmt.executeUpdate() == 1;
+
+			if (pstmt.executeUpdate() == 1) {
+				retVal = true;
+				korisnik.setId(getInsertedId(conn));
+			}
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -224,7 +215,7 @@ public class KorisnikDAO {
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
 		
-		return false;
+		return retVal;
 	}
 
 	public static boolean update(Korisnik korisnik) {
@@ -251,6 +242,7 @@ public class KorisnikDAO {
 		return false;
 	}
 
+	//brisanje korisnika po id-u
 	public static boolean delete(String id) {
 		Connection conn = ConnectionManager.getConnection();
 		PreparedStatement pstmt = null;
@@ -270,9 +262,5 @@ public class KorisnikDAO {
 		return false;
 	}
 
-	public static void add(String korisnickoIme, String lozinka) {
-		
-		
-	}
 
 }

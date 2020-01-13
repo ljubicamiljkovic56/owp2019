@@ -1,5 +1,6 @@
 var korisnici = []
 var sortKorisnickoImeSmer = 1;
+var sortDatumRegSmer = 1;
 var sortUlogaSmer = 1;
 $(document).ready(function(){
 	$('#logoutLink').on('click', function(event){
@@ -15,18 +16,24 @@ $(document).ready(function(){
 		return false;
 	});
 	
+	var filterKorisnickoImeInput = $('#filterKorisnickoImeInput');
+	var filterDatumRegInput = $('#filterDatumRegInput');
+	var filterUlogaInput = $('#filterUlogaInput');
 	
-	var korisnikInput = $('#korisnikInput');
-	
-	var putniciTable = $('#korisnikTable');
+	var korisnikTable = $('#korisnikTable');
 
 	function getKorisnici(){
-		var korisnik = korisnikInput.val();
-		
-		console.log('korisnik: ' + korisnik);
+		var filterKorisnickoIme = filterKorisnickoImeInput.val();
+		var filterDatumReg = filterDatumRegInput.val();
+		var filterUloga = filterUlogaInput.val();
+		console.log('filterKorisnickoIme: ' + filterKorisnickoIme);
+		console.log('filterDatumReg: ' + filterDatumReg);
+		console.log('filterUloga: ' + filterUloga);
 
 		var params = {
-			'korisnik' : korisnik
+			'filterKorisnickoIme ' : filterKorisnickoIme,
+			'filterDatumReg ' : filterDatumReg,
+			'filterUloga ' : filterUloga
 
 		};
 		$.get('KorisnikServlet', params, function(data){
@@ -37,13 +44,25 @@ $(document).ready(function(){
 				return;
 			}
 			if(data.status == 'success') {
-				korisnici = data.korisnik;
+				korisnici = data.filterKorisnici;
 				
 				popuniTabelu(korisnici);
 			}	
 		});
 	};
-	korisnikInput.on('keyup', function(event){
+	filterKorisnickoImeInput.on('keyup', function(event){
+		getKorisnici();
+		
+		event.preventDefault();
+		return false;
+	});
+	filterDatumRegInput.on('keyup', function(event){
+		getKorisnici();
+		
+		event.preventDefault();
+		return false;
+	});
+	filterUlogaInput.on('keyup', function(event){
 		getKorisnici();
 		
 		event.preventDefault();
@@ -75,13 +94,12 @@ $(document).ready(function(){
 	});
 	
 	function popuniTabelu(korisniciZaTabelu){
-		putniciTable.find('tr:gt(1)').remove();
+		korisnikTable.find('tr:gt(1)').remove();
 
 		console.log(korisniciZaTabelu);
 		for(it of korisniciZaTabelu){
-			putniciTable.append(
+			korisnikTable.append(
 					'<tr>' + 
-					'<td><a href="korisnici.html?id=' + it.id + '">' + it.id + '</a></td>' +
 					'<td><a href="korisnik.html?id=' + it.korisnickoIme + '">' + it.korisnickoIme + '</td>' +
 					'<td>' + new Date(it.datumReg) + '</td>' + 
 					'<td>' + it.uloga + '</td>' +
@@ -98,6 +116,11 @@ $(document).ready(function(){
 	$('#sortKorisnickoIme').on('click', function(event){
 		alert('Sortiram...');
 		sortiraj('korisnickoIme');
+	});
+	
+	$('#sortDatumReg').on('click', function(event){
+		alert('Sortiram...');
+		sortiraj('datumReg');
 	});
 	
 	$('#sortUloga').on('click', function(event){
@@ -124,6 +147,20 @@ $(document).ready(function(){
 							sortiraniKorisnici[j] = temp;
 						}
 					}
+				} else if (sort === 'datumReg'){
+					if (sortDatumRegSmer == 1){
+						if(sortiraniKorisnici[i].datumReg > sortiraniKorisnici[j].datumReg){
+							let temp = sortiraniKorisnici[i];
+							sortiraniKorisnici[i] = sortiraniKorisnici[j];
+							sortiraniKorisnici[j] = temp;
+						}
+					} else {
+						if(sortiraniKorisnici[i].datumReg < sortiraniKorisnici[j].datumReg){
+							let temp = sortiraniKorisnici[i];
+							sortiraniKorisnici[i] = sortiraniKorisnici[j];
+							sortiraniKorisnici[j] = temp;
+						}
+					}
 				} else if (sort === 'uloga'){
 					if (sortUlogaSmer == 1){
 						if(sortiraniKorisnici[i].uloga > sortiraniKorisnici[j].uloga){
@@ -143,6 +180,8 @@ $(document).ready(function(){
 		}
 		if (sort === 'korisnickoIme'){
 			sortKorisnickoImeSmer = -1 * sortKorisnickoImeSmer;
+		}else if (sort === 'datumReg'){
+			sortDatumRegSmer = -1 * sortDatumRegSmer;
 		}else if (sort === 'uloga'){
 			sortUlogaSmer = -1 * sortUlogaSmer;
 		}

@@ -3,6 +3,7 @@ package owp.servlet;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import owp.dao.FilmDAO;
 import owp.dao.KorisnikDAO;
+import owp.model.Film;
 import owp.model.Korisnik;
 import owp.model.Korisnik.Uloga;
 
@@ -29,12 +32,19 @@ public class KorisnikServlet extends HttpServlet {
 			return;
 		}
 
-		String korisnickoIme = request.getParameter("korisnickoIme");
-		Korisnik korisnik = KorisnikDAO.get(korisnickoIme);
+//		String korisnickoIme = request.getParameter("korisnickoIme");
+//		Korisnik korisnik = KorisnikDAO.get(korisnickoIme);
+//		
+//		Map<String, Object> data = new LinkedHashMap<>();
+//		
+//		data.put("korisnik", KorisnikDAO.getAll());
 		
+
+		List<Korisnik> filterKorisnici = KorisnikDAO.getAll();
+
 		Map<String, Object> data = new LinkedHashMap<>();
-		
-		data.put("korisnik", KorisnikDAO.getAll());
+		data.put("filterKorisnici", filterKorisnici);
+		System.out.println(filterKorisnici);
 
 		String action = request.getParameter("action");
 		if (action != null) {
@@ -67,7 +77,7 @@ public class KorisnikServlet extends HttpServlet {
 			switch(action) {
 				case "add": {
 			
-					int id = ulogovanKorisnik.getId();
+					//int id = ulogovanKorisnik.getId();
 					String korisnickoIme = ulogovanKorisnik.getKorisnickoIme();
 					korisnickoIme = (!"".equals(korisnickoIme)? korisnickoIme: "<nepopunjeno>");
 					String lozinka = ulogovanKorisnik.getLozinka();
@@ -77,8 +87,8 @@ public class KorisnikServlet extends HttpServlet {
 					java.sql.Date datumReg = new java.sql.Date(sdf3.parse(datumRegString).getTime());
 					String ulogaS = request.getParameter("uloga");
 					 
-					Korisnik korisnik = new Korisnik(id, korisnickoIme, lozinka, datumReg, Uloga.valueOf(ulogaS));
-					KorisnikDAO.add(korisnickoIme, lozinka);
+					Korisnik korisnik = new Korisnik(korisnickoIme, lozinka, datumReg, Uloga.valueOf(ulogaS));
+					KorisnikDAO.add(korisnik);
 					break;
 					
 				}

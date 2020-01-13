@@ -5,7 +5,7 @@
     <welcome-file>glavna.html</welcome-file>
   </welcome-file-list>
   <listener>
-  	<listener-class>
+    <listener-class>
   		owp.servlet.InitListener
   	</listener-class>
   </listener>
@@ -138,5 +138,15 @@
   <servlet-mapping>
     <servlet-name>FilmServlet</servlet-name>
     <url-pattern>/FilmServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProjekcijeServlet</display-name>
+    <servlet-name>ProjekcijeServlet</servlet-name>
+    <servlet-class>owp.servlet.ProjekcijeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProjekcijeServlet</servlet-name>
+    <url-pattern>/ProjekcijeServlet</url-pattern>
   </servlet-mapping>
 </web-app>

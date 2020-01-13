@@ -5,7 +5,6 @@ var sortTrajanjeSmer = 1;
 var sortDistributerSmer = 1;
 var sortZemljaPoreklaSmer = 1;
 var sortGodinaProizvodnjeSmer = 1;
-//var sortOpisSmer = 1;
 
 $(document).ready(function(){
 	var filterNazivInput = $('#filterNazivInput');
@@ -14,7 +13,6 @@ $(document).ready(function(){
 	var filterDistributerInput = $('#filterDistributerInput');
 	var filterZemljaPoreklaInput = $('#filterZemljaPoreklaInput');
 	var filterGodinaProizvodnjeInput = $('#filterGodinaProizvodnjeInput');
-//	var filterOpisInput = $('#filterOpisInput');
 
 	var filmTable = $('#filmTable');
 	
@@ -25,14 +23,13 @@ $(document).ready(function(){
 		var filterDistributer = filterDistributerInput.val();
 		var filterZemljaPorekla = filterZemljaPoreklaInput.val();
 		var filterGodinaProizvodnje = filterGodinaProizvodnjeInput.val();
-//		var filterOpis = filterOpisInput.val();
 		console.log('filterNaziv: ' + filterNaziv);
 		console.log('filterZanrovi: ' + filterZanrovi);
 		console.log('filterTrajanje: ' + filterTrajanje);
 		console.log('filterDistributer: ' + filterDistributer);
 		console.log('filterZemljaPorekla: ' + filterZemljaPorekla);
 		console.log('filterGodinaProizvodnje: ' + filterGodinaProizvodnje);
-//		console.log('filterOpis: ' + filterOpis);
+
 		
 		var params = {
 			'filterNaziv': filterNaziv,
@@ -41,7 +38,6 @@ $(document).ready(function(){
 			'filterDistributer': filterDistributer,
 			'filterZemljaPorekla': filterZemljaPorekla,
 		    'filterGodinaProizvodnje': filterGodinaProizvodnje
-//			'filterOpis': filterOpis
 		};
 		
 		$.get('IndexServlet', params, function(data){
@@ -92,12 +88,6 @@ $(document).ready(function(){
 		event.preventDefault();
 		return false;
 	});
-//	filterOpisInput.on('keyup', function(event){
-//		getFilmovi();
-//		
-//		event.preventDefault();
-//		return false;
-//	});
 
 	function popuniTabelu(filmoviZaTabelu){
 		filmTable.find('tr:gt(1)').remove();
@@ -114,7 +104,6 @@ $(document).ready(function(){
 					'<td>' + it.distributer + '</td>' +
 					'<td>' + it.zemljaPorekla + '</td>' +
 					'<td>' + it.godinaProizvodnje + '</td>' +
-//					'<td>' + it.opis + '</td>' + 
 					'<td>' + 
 					'</td>' + 
 				'</tr>'
@@ -146,10 +135,6 @@ $(document).ready(function(){
 		alert('Sortiram...');
 		sortiraj('godinaProizvodnje');
 	});
-//	$('#sortOpis').on('click', function(event){
-//		alert('Sortiram...');
-//		sortiraj('opis');
-//	});
 	
 	function sortiraj(sort){
 		let sortiraniFilmovi = filmovi;
@@ -240,21 +225,7 @@ $(document).ready(function(){
 							sortiraniFilmovi[j] = temp;
 						}
 					}
-				} else if (sort === 'opis'){
-					if (sortOpisSmer == 1){
-						if(sortiraniFilmovi[i].opis > sortiraniFilmovi[j].opis){
-							let temp = sortiraniFilmovi[i];
-							sortiraniFilmovi[i] = sortiraniFilmovi[j];
-							sortiraniFilmovi[j] = temp;
-						}
-					} else {
-						if(sortiraniFilmovi[i].opis < sortiraniFilmovi[j].opis){
-							let temp = sortiraniFilmovi[i];
-							sortiraniFilmovi[i] = sortiraniFilmovi[j];
-							sortiraniFilmovi[j] = temp;
-						}
-					}
-				}
+				} 
 			}
 		}
 		if (sort === 'naziv'){
@@ -270,9 +241,6 @@ $(document).ready(function(){
 		}else if (sort === 'godinaProizvodnje'){
 			sortGodinaProizvodnjeSmer = -1 * sortGodinaProizvodnjeSmer;
 		}
-//		}else if (sort === 'opis'){
-//			sortOpisSmer = -1 * sortOpisSmer;
-//		}
 
 		popuniTabelu(sortiraniFilmovi);
 	};
