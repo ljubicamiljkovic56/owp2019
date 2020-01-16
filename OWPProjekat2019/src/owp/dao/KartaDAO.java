@@ -41,7 +41,7 @@ public class KartaDAO {
 				Time vremeProdaje = rset.getTime(index++);
 				String korisnik = rset.getString(index++);
 			
-				karta = new Karta(idPro,film,tipProjekcije,sala,datumProjekcije,vremeProjekcije,cenaKarte,korisnik);
+				karta = new Karta(idKarte,projekcija, sediste, datumProdaje, vremeProdaje,korisnik);
 				}
 		} catch (Exception ex) {
 			ex.printStackTrace();

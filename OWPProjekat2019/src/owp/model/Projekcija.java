@@ -1,69 +1,79 @@
 package owp.model;
 
 import java.sql.Date;
-import java.sql.Time;
 
 public class Projekcija {
 	
 	private int id;
-	private Film film;
-	private TipProjekcije tipProjekcije;
-	private Sala sala;
-	private Date datumPrikazivanja;
-	private Time vremePrikazivanja;
+	//private Film film;
+	//private TipProjekcije tipProjekcije;
+	//private Sala sala;
+	private String film;
+	private String tipProjekcije;
+	private String sala;
+	private Date datumIVremePrikazivanja;
+//	private Time vremePrikazivanja;
 	private double cenaKarte;
-	private Korisnik admin;
+	private String admin;
 	
 	
-	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, Date datumPrikazivanja,
-			Time vremePrikazivanja, double cenaKarte, Korisnik admin) {
+	
+	public Projekcija(int id, String film, String tipProjekcije, String sala, Date datumIVremePrikazivanja,
+			double cenaKarte, String admin) {
+		super();
 		this.id = id;
 		this.film = film;
 		this.tipProjekcije = tipProjekcije;
 		this.sala = sala;
-		this.datumPrikazivanja = datumPrikazivanja;
-		this.vremePrikazivanja = vremePrikazivanja;
+		this.datumIVremePrikazivanja = datumIVremePrikazivanja;
 		this.cenaKarte = cenaKarte;
 		this.admin = admin;
-		
 	}
 	
 	
+	
+	public Projekcija(String film, String tipProjekcije, String sala, Date datumIVremePrikazivanja, double cenaKarte,
+			String admin) {
+		super();
+		this.film = film;
+		this.tipProjekcije = tipProjekcije;
+		this.sala = sala;
+		this.datumIVremePrikazivanja = datumIVremePrikazivanja;
+		this.cenaKarte = cenaKarte;
+		this.admin = admin;
+	}
+
+
+
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Film getFilm() {
+	public String getFilm() {
 		return film;
 	}
-	public void setFilm(Film film) {
+	public void setFilm(String film) {
 		this.film = film;
 	}
-	public TipProjekcije getTipProjekcije() {
+	public String getTipProjekcije() {
 		return tipProjekcije;
 	}
-	public void setTipProjekcije(TipProjekcije tipProjekcije) {
+	public void setTipProjekcije(String tipProjekcije) {
 		this.tipProjekcije = tipProjekcije;
 	}
-	public Sala getSala() {
+	public String getSala() {
 		return sala;
 	}
-	public void setSala(Sala sala) {
+	public void setSala(String sala) {
 		this.sala = sala;
 	}
-	public Date getDatumPrikazivanja() {
-		return datumPrikazivanja;
+	public Date getDatumIVremePrikazivanja() {
+		return datumIVremePrikazivanja;
 	}
-	public void setDatumPrikazivanja(Date datumPrikazivanja) {
-		this.datumPrikazivanja = datumPrikazivanja;
-	}
-	public Time getVremePrikazivanja() {
-		return vremePrikazivanja;
-	}
-	public void setVremePrikazivanja(Time vremePrikazivanja) {
-		this.vremePrikazivanja = vremePrikazivanja;
+	public void setDatumIVremePrikazivanja(Date datumIVremePrikazivanja) {
+		this.datumIVremePrikazivanja = datumIVremePrikazivanja;
 	}
 	public double getCenaKarte() {
 		return cenaKarte;
@@ -71,16 +81,27 @@ public class Projekcija {
 	public void setCenaKarte(double cenaKarte) {
 		this.cenaKarte = cenaKarte;
 	}
-
-
-	public Korisnik getAdmin() {
+	public String getAdmin() {
 		return admin;
 	}
-
-
-	public void setAdmin(Korisnik admin) {
+	public void setAdmin(String admin) {
 		this.admin = admin;
 	}
+	
+	
+//	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, Date datumPrikazivanja,
+//			Time vremePrikazivanja, double cenaKarte, Korisnik admin) {
+//		this.id = id;
+//		this.film = film;
+//		this.tipProjekcije = tipProjekcije;
+//		this.sala = sala;
+//		this.datumPrikazivanja = datumPrikazivanja;
+//		this.vremePrikazivanja = vremePrikazivanja;
+//		this.cenaKarte = cenaKarte;
+//		this.admin = admin;
+//		
+//	}
+	
 
 
 

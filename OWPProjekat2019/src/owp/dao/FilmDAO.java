@@ -15,11 +15,11 @@ public class FilmDAO {
 	//nadji film po id-u
 	public static Film get(int id) {
 		Connection conn = ConnectionManager.getConnection();
-
+		Film film = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT * FROM film WHERE id = ? ";
+			String query = "SELECT naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis FROM film WHERE id = ? ";
 			
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, id);
@@ -28,17 +28,19 @@ public class FilmDAO {
 			rset = pstmt.executeQuery();
 			
 			if (rset.next()) {
-				int index = 1;
-				int id1 = rset.getInt(index++);
-				String naziv = rset.getString(index++);
-				String reziser = rset.getString(index++);
-				String glumci = rset.getString(index++);
-				String zanrovi = rset.getString(index++);
-				int trajanje = rset.getInt(index++);
-				String distributer = rset.getString(index++);
-				String zemljaPorekla = rset.getString(index++);
-				int godinaProizvodnje = rset.getInt(index++);
-				String opis = rset.getString(index++);
+				//int index = 1;
+				//int id1 = rset.getInt(index++);
+				String naziv = rset.getString(1);
+				String reziser = rset.getString(2);
+				String glumci = rset.getString(3);
+				String zanrovi = rset.getString(4);
+				int trajanje = rset.getInt(5);
+				String distributer = rset.getString(6);
+				String zemljaPorekla = rset.getString(7);
+				int godinaProizvodnje = rset.getInt(8);
+				String opis = rset.getString(9);
+				
+				film = new Film(id, naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis);
 			}
 		}		
 		catch (Exception ex) {
@@ -49,8 +51,50 @@ public class FilmDAO {
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
 		
-		return null;
+		return film;
 	}
+	
+	
+//	public static Film getNaziv(String naziv) {
+//		Connection conn = ConnectionManager.getConnection();
+//
+//		PreparedStatement pstmt = null;
+//		ResultSet rset = null;
+//		try {
+//			String query = "SELECT * FROM film WHERE naziv = ? ";
+//			
+//			pstmt = conn.prepareStatement(query);
+//			pstmt.setInt(1, id);
+//			System.out.println(pstmt);
+//
+//			rset = pstmt.executeQuery();
+//			
+//			if (rset.next()) {
+//				int index = 1;
+//				int id1 = rset.getInt(index++);
+//				String naziv1 = rset.getString(index++);
+//				String reziser = rset.getString(index++);
+//				String glumci = rset.getString(index++);
+//				String zanrovi = rset.getString(index++);
+//				int trajanje = rset.getInt(index++);
+//				String distributer = rset.getString(index++);
+//				String zemljaPorekla = rset.getString(index++);
+//				int godinaProizvodnje = rset.getInt(index++);
+//				String opis = rset.getString(index++);
+//				
+//				return new Film(id1, naziv1, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis);
+//			}
+//		}		
+//		catch (Exception ex) {
+//			ex.printStackTrace();
+//		} finally {
+//			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+//			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+//			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+//		}
+//		
+//		return null;
+//	}
 	
 	public static List<Film> getAll(){
 		List<Film> filmovi = new ArrayList<>();
@@ -343,6 +387,8 @@ public class FilmDAO {
 	public static boolean update(Film film) {
 		Connection conn = ConnectionManager.getConnection();
 
+		boolean retVal = false;
+		
 		PreparedStatement pstmt = null;
 		try {
 			String query = "UPDATE film SET naziv = ?, reziser = ?, glumci = ?, zanrovi = ?, trajanje = ?, distributer = ?, zemlja = ?, godina = ?, opis = ?"
@@ -362,7 +408,10 @@ public class FilmDAO {
 			pstmt.setString(index++, film.getOpis());
 			System.out.println(pstmt);
 
-			return pstmt.executeUpdate() == 1;
+			if (pstmt.executeUpdate() == 1) {
+				retVal = true;
+			}
+			//return pstmt.executeUpdate() == 1;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -370,7 +419,7 @@ public class FilmDAO {
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
 		
-		return false;
+		return retVal;
 	}
 	//delete
 	public static boolean delete(String id) {

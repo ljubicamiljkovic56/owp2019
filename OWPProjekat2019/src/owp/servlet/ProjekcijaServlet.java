@@ -1,9 +1,10 @@
 package owp.servlet;
 
 import java.io.IOException;
-import java.sql.Time;
+
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import owp.dao.FilmDAO;
 import owp.dao.KorisnikDAO;
 import owp.dao.ProjekcijaDAO;
 import owp.model.Korisnik;
@@ -31,12 +31,14 @@ public class ProjekcijaServlet extends HttpServlet {
 			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
 			return;
 		}
-		
-		int id = Integer.parseInt(request.getParameter("id"));
-		Projekcija projekcija = ProjekcijaDAO.get(id);
+//		
+//		int id = Integer.parseInt(request.getParameter("id"));
+//		Projekcija filterProjekcija = ProjekcijaDAO.get(id);
+
+		List<Projekcija> filterProjekcije = ProjekcijaDAO.getAll();
 		
 		Map<String, Object> data = new LinkedHashMap<>();
-		data.put("projekcija", projekcija);
+		data.put("filterProjekcije", filterProjekcije);
 		data.put("ulogovanKorisnikUloga", ulogovanKorisnik.getUloga());
 
 		request.setAttribute("data", data);
@@ -67,12 +69,12 @@ public class ProjekcijaServlet extends HttpServlet {
 				case "add": {
 					int id = Integer.parseInt(request.getParameter("id"));
 					id = (id > 0? id: 0);
-					String film = request.getParameter("film");
-					film = (!"".equals(film)? film: "<nepopunjen film>");
+					String filmS = request.getParameter("film");
+					filmS = (!"".equals(filmS)? filmS: "<nepopunjen film>");
 					String tipProjekcije = request.getParameter("tipProjekcije");
 					tipProjekcije = (!"".equals(tipProjekcije)? tipProjekcije: "<nepopunjen tip projekcije>");
-					int sala = Integer.parseInt(request.getParameter("sala"));
-					sala = (sala > 0? sala: 0);
+					String sala = request.getParameter("sala");
+					sala = (!"".equals(sala)? sala: "<nepopunjena sala>");
 					
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
 					String najranijiDatum = "01-01-2019";
@@ -83,24 +85,20 @@ public class ProjekcijaServlet extends HttpServlet {
 					temp = sdf.parse(najkasnijiDatum);
 					java.sql.Date sqlNajkasnijiDatum = new java.sql.Date(temp.getTime());
 					
-					String datumPrikazivanjaString = request.getParameter("datumPrikazivanja");
-					SimpleDateFormat sdf2 = new SimpleDateFormat("dd-mm-yyyy HH:mm:ss");
-					java.sql.Date datumPrikazivanja = new java.sql.Date(sdf2.parse(datumPrikazivanjaString).getTime());
+					String datumIVremePrikazivanjaString = request.getParameter("datumPrikazivanja");
+					SimpleDateFormat sdf2 = new SimpleDateFormat("dd-mm-yyyy HH:mm");
+					java.sql.Date datumIVremePrikazivanja = new java.sql.Date(sdf2.parse(datumIVremePrikazivanjaString).getTime());
 					
-					if (datumPrikazivanja.before(sqlNajkasnijiDatum) && datumPrikazivanja.after(sqlNajranijiDatum)) {
-						//prikazi taj datum
+					if (datumIVremePrikazivanja.before(sqlNajkasnijiDatum) && datumIVremePrikazivanja.after(sqlNajranijiDatum)) {
+						return;
 					}
-					
-					//ne znam kako vreme da parsiram
-//					String vreme = "00:00";
-//					Time vremePrikazivanja = new Time(vreme)
 					
 					double cenaKarte = Double.parseDouble(request.getParameter("cenaKarte"));
 					cenaKarte = (cenaKarte > 0? cenaKarte: 99999999.00);
 					String admin = request.getParameter("admin");
 					admin = (!"".equals(admin)? admin: "<nepopunjen admin>");
 
-					Projekcija projekcija = new Projekcia(id,film, tipProjekcije,sala, datumPrikazivanja, vremePrikazivanja,cenaKarte,admin);
+					Projekcija projekcija = new Projekcija(id,filmS,tipProjekcije,sala, datumIVremePrikazivanja,cenaKarte,admin);
 					ProjekcijaDAO.add(projekcija);
 					break;
 				}
@@ -110,11 +108,11 @@ public class ProjekcijaServlet extends HttpServlet {
 					
 					id = (id > 0? id: projekcija.getId());
 					String film = request.getParameter("film");
-					film = (!"".equals(film)? film: projekcija.getFilm().getNaziv());
+					film = (!"".equals(film)? film: projekcija.getFilm());
 					String tipProjekcije = request.getParameter("tipProjekcije");
-					tipProjekcije = (!"".equals(tipProjekcije)? tipProjekcije: projekcija.getTipProjekcije().getNaziv());
-					int sala = Integer.parseInt(request.getParameter("sala"));
-					sala = (sala > 0? sala: projekcija.getSala().getId());
+					tipProjekcije = (!"".equals(tipProjekcije)? tipProjekcije: projekcija.getTipProjekcije());
+					String sala = request.getParameter("sala");
+					sala = (!"".equals(sala)? sala: projekcija.getSala());
 					
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
 					String najranijiDatum = "01-01-2019";
@@ -127,27 +125,22 @@ public class ProjekcijaServlet extends HttpServlet {
 					
 					String datumPrikazivanjaString = request.getParameter("datumPrikazivanja");
 					SimpleDateFormat sdf2 = new SimpleDateFormat("dd-mm-yyyy HH:mm:ss");
-					java.sql.Date datumPrikazivanja = new java.sql.Date(sdf2.parse(datumPrikazivanjaString).getTime());
+					java.sql.Date datumIVremePrikazivanja = new java.sql.Date(sdf2.parse(datumPrikazivanjaString).getTime());
 					
-					if (datumPrikazivanja.before(sqlNajkasnijiDatum) && datumPrikazivanja.after(sqlNajranijiDatum)) {
+					if (datumIVremePrikazivanja.before(sqlNajkasnijiDatum) && datumIVremePrikazivanja.after(sqlNajranijiDatum)) {
 						//prikazi taj datum
 					}
-					
-					//ne znam kako vreme da parsiram
-//					String vreme = "00:00";
-//					Time vremePrikazivanja = new Time(vreme)
 					
 					double cenaKarte = Double.parseDouble(request.getParameter("cenaKarte"));
 					cenaKarte = (cenaKarte > 0? cenaKarte: projekcija.getCenaKarte());
 					String admin = request.getParameter("admin");
-					admin = (!"".equals(admin)? admin: projekcija.getAdmin().getKorisnickoIme());
+					admin = (!"".equals(admin)? admin: projekcija.getAdmin());
 					
 					projekcija.setId(id);
 					projekcija.setFilm(film);
 					projekcija.setTipProjekcije(tipProjekcije);
-					projekcija.setSala(sala);
-					projekcija.setDatumPrikazivanja(datumPrikazivanja);
-					projekcija.setVremePrikazivanja(vremePrikazivanja);
+					projekcija.setSala(sala);;
+					projekcija.setDatumIVremePrikazivanja(datumIVremePrikazivanja);
 					projekcija.setCenaKarte(cenaKarte);
 					projekcija.setAdmin(admin);
 					ProjekcijaDAO.update(projekcija);

@@ -85,6 +85,8 @@ $(document).ready(function(){
 					$('#adminParagraph').append('<a href="dodajprojekciju.html">Dodavanje projekcije</a>');
 					$('#adminParagraph').append('<p></p>');
 					$('#adminParagraph').append('<a href="korisnici.html">Pregled korisnika</a>');
+					$('#adminParagraph').append('<p></p>');
+					$('#adminParagraph').append('<a href="projekcijeadmin.html">Pregled projekcija - admin</a>')
 					
 				}
 			}
@@ -157,7 +159,7 @@ $(document).ready(function(){
 		for(it of filmoviZaTabelu){
 			filmTable.append(
 				'<tr>' + 
-					'<td>' + it.naziv + '</td>' +
+					'<td><a href="izmenifilm.html?naziv=' + it.naziv + '">' + it.naziv + '</td>' +
 					'<td>' + it.reziser + '</td>' +
 					'<td>' + it.glumci + '</td>' +
 					'<td>' + it.zanrovi + '</td>' +
@@ -169,7 +171,6 @@ $(document).ready(function(){
 					'<td>' + 
 					'<form>' + '<input type="submit" value="Obrisi" class="deleteSubmit" filmID="' + it.id + '">' + 
 				'</form>' + '</td>' + 
-//					'<td>' + '<input type="submit" onclick="obrisiFilm(\'' + it.id + '\')" value="Obrisi" >'+ '</td>' + 
 					'<td>' + 
 					'</td>' + 
 				'</tr>'
@@ -202,44 +203,6 @@ $(document).ready(function(){
 		return false;
 	});
 	
-	
-//	function obrisiFilm(id) {	
-//		jQuery.ajax({
-//			url : 'https://localhost:8080/OWPProjekat2019/FilmServlet',
-//			type : 'post',
-//			data : {'id' : id},
-//			success : function(response) {
-//				console.log('odgovor');
-//				console.log(response);
-//			}
-//		}).fail(function(xhr, err) {
-//			console.log('Greska pri brisanju');
-//			console.log(err);
-//		});
-//	}
-//	
-//	$('#deleteSubmit').on('click', function(event) {
-//		params = {
-//			'action': 'delete',
-//			'id': id, 
-//		};
-//		console.log(params);
-//		$.post('FilmServlet', params, function(data) {
-//			if (data.status == 'unauthenticated') {
-//				window.location.replace('login.html');
-//				return;
-//			}
-//
-//			if (data.status == 'success') {
-//				window.location.replace('aplikacija.html');
-//				return;
-//			}
-//		});
-//
-//		event.preventDefault();
-//		return false;
-//	});
-//	
 	$('#sortNaziv').on('click', function(event){
 		alert('Sortiram...');
 		sortiraj('naziv');

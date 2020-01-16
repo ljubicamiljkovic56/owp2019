@@ -20,7 +20,9 @@ public class IndexServlet extends HttpServlet {
 		String naziv = request.getParameter("filterNaziv");
 		naziv = (naziv != null? naziv: "");
 		String reziser = request.getParameter("filterReziser");
+		reziser = (reziser != null? reziser: "");
 		String glumci = request.getParameter("filterGlumci");
+		glumci = (glumci != null? glumci: "");
 		String zanrovi = request.getParameter("filterZanrovi");
 		zanrovi = (zanrovi != null? zanrovi: "");
 		int trajanje = 0;
