@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	var urlParams = new URLSearchParams(window.location.search);
+	$('#idInput').val(urlParams.get('id'));
 	$('#logoutLink').on('click', function(event){
 		$.get('LogoutServlet', function(data){
 			console.log(data);
@@ -11,6 +13,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		return false;
 	});
+	 var idInput = $('#idInput');
 	 var nazivInput = $('#nazivInput');
 	 var reziserInput = $('#reziserInput');
      var glumciInput = $('#glumciInput');
@@ -40,6 +43,7 @@ $(document).ready(function(){
  					$('#korisnikForm').show();
  					$('#adminForm').hide();
  					
+ 					
  					$('#nazivCell').text(film1.naziv);
  					$('#reziserCell').text(film1.reziser);
  					$('#glumciCell').text(film1.glumci);
@@ -56,6 +60,7 @@ $(document).ready(function(){
  					$('#adminForm').show();
 
  					$('button').on('click', function(event) {
+ 						var id = idInput.val();
  						var naziv = nazivInput.val();
  						var reziser = reziserInput.val();
  						var glumci = glumciInput.val();
@@ -65,6 +70,7 @@ $(document).ready(function(){
  						var zemljaPorekla = zemljaPoreklaInput.val();
  						var godinaProizvodnje = godinaProizvodnjeInput.val();
  						var opis = opisInput.val();
+ 						console.log('id: ' + id);
  						console.log('naziv: ' + naziv);
  						console.log('reziser: ' + reziser);
  						console.log('glumci: ' + glumci);
@@ -77,7 +83,7 @@ $(document).ready(function(){
 
  						params = {
  							'action': 'update',
- 							//'id': id, 
+ 							'id': id, 
  							'naziv': naziv,
  							'reziser': reziser,
  							'glumci': glumci,

@@ -20,7 +20,6 @@ public class Projekcija {
 	
 	public Projekcija(int id, String film, String tipProjekcije, String sala, Date datumIVremePrikazivanja,
 			double cenaKarte, String admin) {
-		super();
 		this.id = id;
 		this.film = film;
 		this.tipProjekcije = tipProjekcije;
@@ -34,7 +33,6 @@ public class Projekcija {
 	
 	public Projekcija(String film, String tipProjekcije, String sala, Date datumIVremePrikazivanja, double cenaKarte,
 			String admin) {
-		super();
 		this.film = film;
 		this.tipProjekcije = tipProjekcije;
 		this.sala = sala;

@@ -121,6 +121,32 @@ $(document).ready(function(){
 			)
 		}
 	};
+	
+	projekcijaTable.on('click', 'input.deleteSubmit', function(event){
+		alert('Brisem...');
+		var projekcijaID = $(this).attr('projekcijaID');
+		console.log('projekcijaID: ' + projekcijaID);
+		
+		params = {
+				'action': 'delete',
+				'id': projekcijaID
+		};
+		console.log(params);
+		$.post('ProjekcijaServlet', params, function(data){
+			if (data.status == 'unauthenticated') {
+				window.location.replace('login.html');
+				return;
+			}
+
+			if (data.status == 'success') {
+				window.location.replace('projekcijeadmin.html');
+				return;
+			}
+		});
+		event.preventDefault();
+		return false;
+	});
+	
 	$('#sortFilm').on('click', function(event){
 		alert('Sortiram...');
 		sortiraj('film');

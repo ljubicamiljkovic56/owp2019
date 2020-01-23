@@ -159,7 +159,7 @@ $(document).ready(function(){
 		for(it of filmoviZaTabelu){
 			filmTable.append(
 				'<tr>' + 
-					'<td><a href="izmenifilm.html?naziv=' + it.naziv + '">' + it.naziv + '</td>' +
+					'<td><a href="izmenifilm.html?naziv=' + it.naziv + '&id=' + it.id +  '">' + it.naziv + '</td>' +
 					'<td>' + it.reziser + '</td>' +
 					'<td>' + it.glumci + '</td>' +
 					'<td>' + it.zanrovi + '</td>' +

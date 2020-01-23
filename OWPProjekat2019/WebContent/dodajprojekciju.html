@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dodavanje projekcije</title>
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/dodajprojekciju.js"></script>
+</head>
+<body>
+
+	<h3>Dodavanje projekcije:</h3>
+	<form>
+		<table>
+			<tr><td align="right">Film:</td><td><input type="text" id="filmInput"/></td></tr>
+			<tr><td align="right">TipProjekcije:</td><td><input type="text" id="tipProjekcijeInput"/></td></tr>
+			<tr><td align="right">Sala:</td><td><input type="text" id="salaInput"/></td></tr>
+			<tr><td align="right">DatumIVremePrikazivanja:</td><td><input type="date" id="datumIVremePrikazivanjaInput"/></td></tr>
+			<tr><td align="right">CenaKarte:</td><td><input type="text" id="cenaKarteInput"/></td></tr>
+			<tr><td align="right">Admin:</td>
+				<td><select name="" id="adminInput">
+					<option value="">pera</option>
+					<option value="">ana</option>
+        		</select></td></tr>
+			
+			<button>Test</button>
+			<tr><td/><td><input type="submit" value="Dodaj" id="projekcijaSubmit"></td></tr>
+		</table>
+	</form>
+	<p><a href="aplikacija.html">Povratak</a></p>
+	<p><a href="" id="logoutLink">Odjava</a></p>
+</body>
+</html>

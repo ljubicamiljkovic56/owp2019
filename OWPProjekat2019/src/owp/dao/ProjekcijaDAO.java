@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import owp.model.Projekcija;
 
 public class ProjekcijaDAO {
 	
+	//uzimanje projekcije po id-u
 	public static Projekcija get(int id) {
 		Projekcija projekcija = null;
 
@@ -51,6 +54,8 @@ public class ProjekcijaDAO {
 		
 		return projekcija;
 	}
+	
+	//prikaz svih projekcija
 	public static List<Projekcija> getAll() {
 		List<Projekcija> projekcije = new ArrayList<>();
 
@@ -132,18 +137,29 @@ public class ProjekcijaDAO {
 		
 		return projekcije;
 	}
+	
+	//poslednji dodati id u bazi
+	protected static int getInsertedId(Connection conn) throws SQLException {
+		String query = "SELECT last_insert_rowid();";
+		Statement stmt = conn.createStatement();
+		ResultSet rset = stmt.executeQuery(query);
+		int retVal = -1;
+		if (rset.next())
+			retVal = rset.getInt(1);
+		rset.close();
+		stmt.close();
+		return retVal;
+	}
 
-
+	//dodavanje projekcije
 	public static boolean add(Projekcija projekcija) {
 		Connection conn = ConnectionManager.getConnection();
-
+		boolean retVal = false;
 		PreparedStatement pstmt = null;
 		try {
-			String query = "INSERT INTO projekcija (film, tipProjekcije, sala, datumProjekcije, cenaKarte, admin) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO projekcija (film, tipProjekcije, sala, datumIVremePrikazivanja, cenaKarte, admin) "
+					+ "VALUES (?, ?, ?, ?, ?, ?)";
 
-
-			//id,film,tipProjekcije,sala,datumProjekcije,vremeProjekcije,cenaKarte,admin
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
 			pstmt.setString(index++, projekcija.getFilm());
@@ -151,10 +167,13 @@ public class ProjekcijaDAO {
 			pstmt.setString(index++, projekcija.getSala());
 			pstmt.setDate(index++, projekcija.getDatumIVremePrikazivanja());
 			pstmt.setDouble(index++, projekcija.getCenaKarte());
-			pstmt.setString(index++, projekcija.getAdmin().toString());
+			pstmt.setString(index++, projekcija.getAdmin());
 			System.out.println(pstmt);
 
-			return pstmt.executeUpdate() == 1;
+			if (pstmt.executeUpdate() == 1) {
+				retVal = true;
+				projekcija.setId(getInsertedId(conn));
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -162,7 +181,7 @@ public class ProjekcijaDAO {
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
 		
-		return false;
+		return retVal;
 	}
 
 	public static boolean update(Projekcija projekcija) {
@@ -195,6 +214,7 @@ public class ProjekcijaDAO {
 		return false;
 	}
 
+	//brisanje projekcije
 	public static boolean delete(int id) {
 		Connection conn = ConnectionManager.getConnection();
 

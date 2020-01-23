@@ -90,7 +90,7 @@ public class FilmServlet extends HttpServlet {
 				case "update": {
 					int id = Integer.parseInt(request.getParameter("id"));
 					Film film = FilmDAO.get(id);
-					id = film.getId();
+					//id = film.getId();
 
 					//id = (id > 0? id: film.getId());
 					String naziv = request.getParameter("naziv");

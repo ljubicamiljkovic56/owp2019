@@ -67,8 +67,8 @@ public class ProjekcijaServlet extends HttpServlet {
 			String action = request.getParameter("action");
 			switch (action) {
 				case "add": {
-					int id = Integer.parseInt(request.getParameter("id"));
-					id = (id > 0? id: 0);
+//					int id = Integer.parseInt(request.getParameter("id"));
+//					id = (id > 0? id: 0);
 					String filmS = request.getParameter("film");
 					filmS = (!"".equals(filmS)? filmS: "<nepopunjen film>");
 					String tipProjekcije = request.getParameter("tipProjekcije");
@@ -76,29 +76,33 @@ public class ProjekcijaServlet extends HttpServlet {
 					String sala = request.getParameter("sala");
 					sala = (!"".equals(sala)? sala: "<nepopunjena sala>");
 					
-					SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
-					String najranijiDatum = "01-01-2019";
-					java.util.Date temp = sdf.parse(najranijiDatum);
-					java.sql.Date sqlNajranijiDatum = new java.sql.Date(temp.getTime());
+//					SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+//					String najranijiDatum = "01-01-2019";
+//					java.util.Date temp = sdf.parse(najranijiDatum);
+//					java.sql.Date sqlNajranijiDatum = new java.sql.Date(temp.getTime());
+//					
+//					String najkasnijiDatum = "01-01-2021";
+//					temp = sdf.parse(najkasnijiDatum);
+//					java.sql.Date sqlNajkasnijiDatum = new java.sql.Date(temp.getTime());
+//					
+//					String datumIVremePrikazivanjaString = request.getParameter("datumPrikazivanja");
+//					SimpleDateFormat sdf2 = new SimpleDateFormat("dd-mm-yyyy HH:mm");
+//					java.sql.Date datumIVremePrikazivanja = new java.sql.Date(sdf2.parse(datumIVremePrikazivanjaString).getTime());
+//					
+//					if (datumIVremePrikazivanja.before(sqlNajkasnijiDatum) && datumIVremePrikazivanja.after(sqlNajranijiDatum)) {
+//						return;
+//					}
 					
-					String najkasnijiDatum = "01-01-2021";
-					temp = sdf.parse(najkasnijiDatum);
-					java.sql.Date sqlNajkasnijiDatum = new java.sql.Date(temp.getTime());
-					
-					String datumIVremePrikazivanjaString = request.getParameter("datumPrikazivanja");
-					SimpleDateFormat sdf2 = new SimpleDateFormat("dd-mm-yyyy HH:mm");
-					java.sql.Date datumIVremePrikazivanja = new java.sql.Date(sdf2.parse(datumIVremePrikazivanjaString).getTime());
-					
-					if (datumIVremePrikazivanja.before(sqlNajkasnijiDatum) && datumIVremePrikazivanja.after(sqlNajranijiDatum)) {
-						return;
-					}
+					String datumIVremePrikazivanjaString = request.getParameter("datumIVremePrikazivanja");
+					SimpleDateFormat sdf3 = new SimpleDateFormat("dd-mm-yyyy HH:mm:ss");
+					java.sql.Date datumIVremePrikazivanja = new java.sql.Date(sdf3.parse(datumIVremePrikazivanjaString).getTime());
 					
 					double cenaKarte = Double.parseDouble(request.getParameter("cenaKarte"));
 					cenaKarte = (cenaKarte > 0? cenaKarte: 99999999.00);
 					String admin = request.getParameter("admin");
 					admin = (!"".equals(admin)? admin: "<nepopunjen admin>");
 
-					Projekcija projekcija = new Projekcija(id,filmS,tipProjekcije,sala, datumIVremePrikazivanja,cenaKarte,admin);
+					Projekcija projekcija = new Projekcija(filmS,tipProjekcije,sala, datumIVremePrikazivanja,cenaKarte,admin);
 					ProjekcijaDAO.add(projekcija);
 					break;
 				}
