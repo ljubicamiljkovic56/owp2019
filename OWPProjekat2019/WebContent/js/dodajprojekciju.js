@@ -14,21 +14,24 @@ $(document).ready(function(){
 	var filmInput = $('#filmInput');
 	var tipProjekcijeInput = $('#tipProjekcijeInput');
 	var salaInput = $('#salaInput');
-	var datumIVremePrikazivanjaInput = $('#datumIVremePrikazivanjaInput');
+	var datumPrikazivanjaInput = $('#datumPrikazivanjaInput');
+	var vremePrikazivanjaInput = $('#vremePrikazivanjaInput');
 	var cenaKarteInput = $('#cenaKarteInput');
 	var adminInput = $('#adminInput');
 	
-	$('#projekcijaSubmit').on('click', function(event){
+	$('button').on('click', function(event){
 		var film = filmInput.val();
 		var tipProjekcije = tipProjekcijeInput.val();
 		var sala = salaInput.val();
-		var datumIVremePrikazivanja = datumIVremePrikazivanjaInput.val();
+		var datumPrikazivanja = datumPrikazivanjaInput.val();
+		var vremePrikazivanja = vremePrikazivanjaInput.val();
 		var cenaKarte = cenaKarteInput.val();
 		var admin = adminInput.val();
 		console.log('film: ' + film);
 		console.log('tipProjekcije: ' + tipProjekcije);
 		console.log('sala: ' + sala);
-		console.log('datumIVremePrikazivanja: ' + datumIVremePrikazivanja);
+		console.log('datumPrikazivanja: ' + datumPrikazivanja);
+		console.log('vremePrikazivanja: ' + vremePrikazivanja);
 		console.log('cenaKarte: ' + cenaKarte);
 		console.log('admin: ' + admin);
 		
@@ -37,7 +40,8 @@ $(document).ready(function(){
 				'film': film, 
 				'tipProjekcije': tipProjekcije,
 				'sala': sala,
-				'datumIVremePrikazivanja': datumIVremePrikazivanja,
+				'datumPrikazivanja': datumPrikazivanja,
+				'vremePrikazivanja': vremePrikazivanja,
 				'cenaKarte': cenaKarte,
 				'admin': admin
 		};
@@ -50,7 +54,7 @@ $(document).ready(function(){
 			}
 
 			if (data.status == 'success') {
-				window.location.replace('aplikacija.html');
+				window.location.replace('projekcijeadmin.html');
 			}
 		});
 		event.preventDefault();

@@ -59,7 +59,7 @@ $(document).ready(function(){
  					$('#korisnikForm').hide()
  					$('#adminForm').show();
 
- 					$('button').on('click', function(event) {
+ 					$('#updateSubmit').on('click', function(event) {
  						var id = idInput.val();
  						var naziv = nazivInput.val();
  						var reziser = reziserInput.val();

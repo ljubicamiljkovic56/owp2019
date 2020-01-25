@@ -38,11 +38,12 @@ public class ProjekcijaDAO {
 				String film = rset.getString(index++);
 				String tipProjekcije = rset.getString(index++);
 				String sala = rset.getString(index++);
-				Date datumIVremeProjekcije = rset.getDate(index++);
+				Date datumPrikazivanja = rset.getDate(index++);
+				String vremePrikazivanja = rset.getString(index++);
 				double cenaKarte = rset.getDouble(index++);
 				String admin = rset.getString(index++);
 			
-				projekcija = new Projekcija(idPro, film, tipProjekcije, sala, datumIVremeProjekcije, cenaKarte, admin);
+				projekcija = new Projekcija(idPro, film, tipProjekcije, sala, datumPrikazivanja, vremePrikazivanja, cenaKarte, admin);
 				}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -76,53 +77,19 @@ public class ProjekcijaDAO {
 				String film = rset.getString("film");
 				String tipProjekcije = rset.getString("tipProjekcije");
 				String sala = rset.getString("sala");
-				Date datumIVremePrikazivanja = rset.getDate("datumIVremePrikazivanja");
+				Date datumPrikazivanja = rset.getDate("datumPrikazivanja");
+				String vremePrikazivanja = rset.getString("vremePrikazivanja");
 				double cenaKarte = rset.getDouble("cenaKarte");
 				String admin = rset.getString("admin");
 				
-			
-//				PreparedStatement pstmt2 = null;
-//				ResultSet rset2 = null;
-//				try {
-//					String query2 = "SELECT * FROM film WHERE naziv = '\" + film + \"'\" ";
-//						
-//					pstmt = conn.prepareStatement(query);
-//					System.out.println(pstmt);
-//
-//					rset = pstmt.executeQuery();
-//						
-//					if (rset.next()) {
-//							
-//					String naziv = rset.getString(1);
-//					String reziser = rset.getString(2);
-//					String glumci = rset.getString(3);
-//					String zanrovi = rset.getString(4);
-//					int trajanje = rset.getInt(5);
-//					String distributer = rset.getString(6);
-//					String zemljaPorekla = rset.getString(7);
-//					int godinaProizvodnje = rset.getInt(8);
-//					String opis = rset.getString(9);
-//							
-//					Film film = new Film(naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis);
-//						}
-//					}		
-//					catch (Exception ex) {
-//						ex.printStackTrace();
-//					} finally {
-//						try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
-//						try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
-//						try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
-//					}
-//					
-//				}
-				
 
-				Projekcija projekcija = new Projekcija(id1, film, tipProjekcije, sala, datumIVremePrikazivanja, cenaKarte, admin);
+				Projekcija projekcija = new Projekcija(id1, film, tipProjekcije, sala, datumPrikazivanja, vremePrikazivanja, cenaKarte, admin);
 				projekcija.setId(id1);
 				projekcija.setFilm(film);
 				projekcija.setTipProjekcije(tipProjekcije);
 				projekcija.setSala(sala);
-				projekcija.setDatumIVremePrikazivanja(datumIVremePrikazivanja);
+				projekcija.setDatumPrikazivanja(datumPrikazivanja);
+				projekcija.setVremePrikazivanja(vremePrikazivanja);
 				projekcija.setCenaKarte(cenaKarte);
 				projekcija.setAdmin(admin);
 				projekcije.add(projekcija);
@@ -157,23 +124,28 @@ public class ProjekcijaDAO {
 		boolean retVal = false;
 		PreparedStatement pstmt = null;
 		try {
-			String query = "INSERT INTO projekcija (film, tipProjekcije, sala, datumIVremePrikazivanja, cenaKarte, admin) "
-					+ "VALUES (?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO projekcija (film, tipProjekcije, sala, datumPrikazivanja, vremePrikazivanja, cenaKarte, admin) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
+		//	pstmt.setInt(index++, film.getId());
 			pstmt.setString(index++, projekcija.getFilm());
 			pstmt.setString(index++, projekcija.getTipProjekcije());
 			pstmt.setString(index++, projekcija.getSala());
-			pstmt.setDate(index++, projekcija.getDatumIVremePrikazivanja());
+			pstmt.setDate(index++, projekcija.getDatumPrikazivanja());
+			pstmt.setString(index++, projekcija.getVremePrikazivanja());
 			pstmt.setDouble(index++, projekcija.getCenaKarte());
 			pstmt.setString(index++, projekcija.getAdmin());
 			System.out.println(pstmt);
 
+			//return pstmt.executeUpdate() == 1;
+			
 			if (pstmt.executeUpdate() == 1) {
 				retVal = true;
 				projekcija.setId(getInsertedId(conn));
 			}
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -183,27 +155,36 @@ public class ProjekcijaDAO {
 		
 		return retVal;
 	}
-
+	
+	
+	//izmena projekcije
 	public static boolean update(Projekcija projekcija) {
 		Connection conn = ConnectionManager.getConnection();
 
+		boolean retVal = false;
+		
 		PreparedStatement pstmt = null;
 		try {
-			String query = "UPDATE projekcija SET film = ?, tipProjekcije = ?, sala = ?, datumProjekcije = ?, vremeProjekcije = ?, cenaKarte = ?, admin = ? "
+			String query = "UPDATE projekcija SET film = ?, tipProjekcije = ?, sala = ?, datumPrikazivanja = ?, vremePrikazivanja = ?, cenaKarte = ?, admin = ?"
 					+ "WHERE id = ?";
 
-			//id,film,tipProjekcije,sala,datumProjekcije,vremeProjekcije,cenaKarte,admin
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
 			pstmt.setString(index++, projekcija.getFilm());
 			pstmt.setString(index++, projekcija.getTipProjekcije());
 			pstmt.setString(index++, projekcija.getSala());
-			pstmt.setDate(index++, projekcija.getDatumIVremePrikazivanja());
+			pstmt.setDate(index++, projekcija.getDatumPrikazivanja());
+			pstmt.setString(index++, projekcija.getVremePrikazivanja());
 			pstmt.setDouble(index++, projekcija.getCenaKarte());
 			pstmt.setString(index++, projekcija.getAdmin());
+			pstmt.setInt(index++, projekcija.getId());
 			System.out.println(pstmt);
 
-			return pstmt.executeUpdate() == 1;
+			if (pstmt.executeUpdate() == 1) {
+				retVal = true;
+				
+			}
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -211,7 +192,7 @@ public class ProjekcijaDAO {
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
 		
-		return false;
+		return retVal;
 	}
 
 	//brisanje projekcije

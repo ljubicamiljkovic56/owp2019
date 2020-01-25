@@ -2,7 +2,8 @@ var projekcije = []
 var sortFilmSmer = 1;
 var sortTipProjekcijeSmer = 1;
 var sortSalaSmer = 1;
-var sortDatumIVremePrikazivanjaSmer = 1;
+var sortDatumPrikazivanjaSmer = 1;
+var sortVremePrikazivanjaSmer = 1;
 var sortCenaKarteSmer = 1;
 var sortAdminSmer = 1;
 
@@ -10,7 +11,8 @@ $(document).ready(function(){
 	var filterFilmInput = $('#filterFilmInput');
 	var filterTipProjekcijeInput = $('#filterTipProjekcijeInput');
 	var filterSalaInput = $('#filterSalaInput');
-	var filterDatumIVremePrikazivanjaInput = $('#filterDatumIVremePrikazivanjaInput');
+	var filterDatumPrikazivanjaInput = $('#filterDatumPrikazivanjaInput');
+	var filterVremePrikazivanjaInput = $('#filterVremePrikazivanjaInput');
 	var filterCenaKarteInput = $('#filterCenaKarteInput');
 	var filterAdminInput = $('#filterAdminInput');
 
@@ -21,13 +23,15 @@ $(document).ready(function(){
 		var filterFilm = filterFilmInput.val();
 		var filterTipProjekcije = filterTipProjekcijeInput.val();
 		var filterSala = filterSalaInput.val();
-		var filterDatumIVremePrikazivanja = filterDatumIVremePrikazivanjaInput.val();
+		var filterDatumPrikazivanja = filterDatumPrikazivanjaInput.val();
+		var filterVremePrikazivanja = filterVremePrikazivanjaInput.val();
 		var filterCenaKarte = filterCenaKarteInput.val();
 		var filterAdmin = filterAdminInput.val();
 		console.log('filterFilm: ' + filterFilm);
 		console.log('filterTipProjekcije: ' + filterTipProjekcije);
 		console.log('filterSala: ' + filterSala);
-		console.log('filterDatumIVremePrikazivanja: ' + filterDatumIVremePrikazivanja);
+		console.log('filterDatumPrikazivanja: ' + filterDatumPrikazivanja);
+		console.log('filterVremePrikazivanja: ' + filterVremePrikazivanja);
 		console.log('filterCenaKarte: ' + filterCenaKarte);
 		console.log('filterAdmin: ' + filterAdmin);
 		
@@ -35,7 +39,8 @@ $(document).ready(function(){
 			'filterFilm': filterFilm,
 			'filterTipProjekcije': filterTipProjekcije,
 			'filterSala': filterSala,
-			'filterDatumIVremePrikazivanja': filterDatumIVremePrikazivanja,
+			'filterDatumPrikazivanja': filterDatumPrikazivanja,
+			'filterVremePrikazivanja': filterVremePrikazivanja,
 		    'filterCenaKarte': filterCenaKarte,
 		    'filterAdmin': filterAdmin
 
@@ -71,18 +76,18 @@ $(document).ready(function(){
 		event.preventDefault();
 		return false;
 	});
-	filterDatumIVremePrikazivanjaInput.on('keyup', function(event){
+	filterDatumPrikazivanjaInput.on('keyup', function(event){
 		getProjekcije();
 		
 		event.preventDefault();
 		return false;
 	});
-//	filterVremePrikazivanjaInput.on('keyup', function(event){
-//		getProjekcije();
-//		
-//		event.preventDefault();
-//		return false;
-//	});
+	filterVremePrikazivanjaInput.on('keyup', function(event){
+		getProjekcije();
+		
+		event.preventDefault();
+		return false;
+	});
 
 	filterCenaKarteInput.on('keyup', function(event){
 		getProjekcije();
@@ -106,10 +111,11 @@ $(document).ready(function(){
 		for(it of projekcijeZaTabelu){
 			projekcijaTable.append(
 				'<tr>' + 
-					'<td><a href="izmenifilm.html?id=' + it.film + '">' + it.film + '</td>' +
+					'<td><a href="izmeniprojekciju.html?film=' + it.film + '&id=' + it.id +  '">' + it.film + '</td>' +
 					'<td>' + it.tipProjekcije + '</td>' +
 					'<td>' + it.sala + '</td>' +
-					'<td>' + new Date(it.datumIVremePrikazivanja) + '</td>' +
+					'<td>' + new Date(it.datumPrikazivanja) + '</td>' +
+					'<td>' + it.vremePrikazivanja + '</td>' +
 					'<td>' + it.cenaKarte + '</td>' +
 					'<td>' + it.admin + '</td>' +
 					'<td>' + 
@@ -161,9 +167,13 @@ $(document).ready(function(){
 		sortiraj('sala');
 	});
 	
-	$('#sortDatumIVremePrikazivanja').on('click', function(event){
+	$('#sortDatumPrikazivanja').on('click', function(event){
 		alert('Sortiram...');
 		sortiraj('datumPrikazivanja');
+	});
+	$('#sortVremePrikazivanja').on('click', function(event){
+		alert('Sortiram...');
+		sortiraj('vremePrikazivanja');
 	});
 	$('#sortCenaKarte').on('click', function(event){
 		alert('Sortiram...');
@@ -222,21 +232,35 @@ $(document).ready(function(){
 							sortiraneProjekcije[j] = temp;
 						}
 					}
-				} else if (sort === 'datumIVremePrikazivanja'){
-					if (sortDatumIVremePrikazivanjaSmer == 1){
-						if (sortiraneProjekcije[i].datumIVremePrikazivanja > sortiraneProjekcije[j].datumIVremePrikazivanja){
+				} else if (sort === 'datumPrikazivanja'){
+					if (sortDatumPrikazivanjaSmer == 1){
+						if (sortiraneProjekcije[i].datumPrikazivanja > sortiraneProjekcije[j].datumPrikazivanja){
 							let temp = sortiraneProjekcije[i];
 							sortiraneProjekcije[i] = sortiraneProjekcije[j];
 							sortiraneProjekcije[j] = temp;
 						}
 					} else {
-						if (sortiraneProjekcije[i].datumIVremePrikazivanja < sortiraneProjekcije[j].datumIVremePrikazivanja){
+						if (sortiraneProjekcije[i].datumPrikazivanja < sortiraneProjekcije[j].datumPrikazivanja){
 							let temp = sortiraneProjekcije[i];
 							sortiraneProjekcije[i] = sortiraneProjekcije[j];
 							sortiraneProjekcije[j] = temp;
 						}
 					}
 
+				} else if (sort === 'vremePrikazivanja'){
+					if (sortVremePrikazivanjaSmer == 1){
+						if (sortiraneProjekcije[i].vremePrikazivanja > sortiraneProjekcije[j].vremePrikazivanja){
+							let temp = sortiraneProjekcije[i];
+							sortiraneProjekcije[i] = sortiraneProjekcije[j];
+							sortiraneProjekcije[j] = temp;
+						}
+					} else {
+						if (sortiraneProjekcije[i].vremePrikazivanja < sortiraneProjekcije[j].vremePrikazivanja){
+							let temp = sortiraneProjekcije[i];
+							sortiraneProjekcije[i] = sortiraneProjekcije[j];
+							sortiraneProjekcije[j] = temp;
+						}
+					}
 
 				} else if (sort === 'cenaKarte'){
 					if (sortCenaKarteSmer == 1){
@@ -276,8 +300,10 @@ $(document).ready(function(){
 			sortTipProjekcijeSmer = -1 * sortTipProjekcijeSmer;
 		}else if (sort === 'sala'){
 			sortSalaSmer = -1 * sortSalaSmer;
-		}else if (sort === 'datumIVremePrikazivanja'){
-			sortDatumIVremePrikazivanjaSmer = -1 * sortDatumIVremePrikazivanjaSmer;
+		}else if (sort === 'datumPrikazivanja'){
+			sortDatumPrikazivanjaSmer = -1 * sortDatumPrikazivanjaSmer;
+		}else if (sort === 'vremePrikazivanja'){
+			sortVremePrikazivanjaSmer = -1 * sortVremePrikazivanjaSmer;
 		}else if (sort === 'cenaKarte'){
 			sortCenaKarteSmer = -1 * sortCenaKarteSmer;
 		}else if (sort === 'admin'){

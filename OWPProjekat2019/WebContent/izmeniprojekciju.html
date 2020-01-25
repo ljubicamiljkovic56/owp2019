@@ -1,0 +1,39 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Izmena rojekcije</title>
+</head>
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/izmeniprojekciju.js"></script>
+<body>
+<h3>Izmena projekcije:</h3>
+	<form id="korisnikForm">
+		<table>
+			<tr><td align="right">ID:</td><td><input type="text" id="idCell"/></td></tr>
+			<tr><td align="right">Film:</td><td><input type="text" id="filmCell"/></td></tr>
+			<tr><td align="right">TipProjekcije:</td><td><input type="text" id="tipProjekcijeCell"/></td></tr>
+			<tr><td align="right">Sala:</td><td><input type="text" id="salaCell"/></td></tr>
+			<tr><td align="right">Datum prikazivanja:</td><td><input type="text" id="datumPrikazivanjaCell"/></td></tr>
+			<tr><td align="right">Vreme prikazivanja:</td><td><input type="text" id="vremePrikazivanjaCell"/></td></tr>
+			<tr><td align="right">CenaKarte:</td><td><input type="text" id="cenaKarteCell"/></td></tr>
+			<tr><td align="right">Admin:</td><td><input type="text" id="adminCell"/></td></tr>
+		</table>
+	</form>
+	<button>Test</button>
+	<form id="adminForm">
+		<table>
+			<tr><td align="right">ID:</td><td><input type="hidden" id="idInput" value="http://localhost:8080/OWPProjekat2019/izmeniprojekciju.html?id="/></td></tr>
+			<tr><td align="right">Film:</td><td><input type="text" id="filmInput"/></td></tr>
+			<tr><td align="right">TipProjekcije:</td><td><input type="text" id="tipProjekcijeInput"/></td></tr>
+			<tr><td align="right">Sala:</td><td><input type="text" id="salaInput"/></td></tr>
+			<tr><td align="right">Datum prikazivanja:</td><td><input type="date" id="datumPrikazivanjaInput"/></td></tr>
+			<tr><td align="right">Vreme prikazivanja:</td><td><input type="text" id="vremePrikazivanjaInput"/></td></tr>
+			<tr><td align="right">CenaKarte:</td><td><input type="text" id="cenaKarteInput"/></td></tr>
+			<tr><td align="right">Admin:</td><td><input type="text" id="adminInput"/></td></tr>
+			<tr><td/><td><input type="submit" value="Izmeni" id="updateSubmit"></td></tr>
+		</table>
+	</form>
+	<p><a href="prjekcijeadmin.html">Povratak na projekcije</a></p>
+	<p><a href="glavna.html" id="logoutLink">Odjava</a></p>
+</body>
+</html>

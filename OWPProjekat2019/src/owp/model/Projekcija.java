@@ -5,38 +5,36 @@ import java.sql.Date;
 public class Projekcija {
 	
 	private int id;
-	//private Film film;
-	//private TipProjekcije tipProjekcije;
-	//private Sala sala;
 	private String film;
 	private String tipProjekcije;
 	private String sala;
-	private Date datumIVremePrikazivanja;
-//	private Time vremePrikazivanja;
+	private Date datumPrikazivanja;
+	private String vremePrikazivanja;
 	private double cenaKarte;
 	private String admin;
 	
 	
-	
-	public Projekcija(int id, String film, String tipProjekcije, String sala, Date datumIVremePrikazivanja,
-			double cenaKarte, String admin) {
+	public Projekcija(int id, String film, String tipProjekcije, String sala, Date datumPrikazivanja,
+			String vremePrikazivanja, double cenaKarte, String admin) {
+		super();
 		this.id = id;
 		this.film = film;
 		this.tipProjekcije = tipProjekcije;
 		this.sala = sala;
-		this.datumIVremePrikazivanja = datumIVremePrikazivanja;
+		this.datumPrikazivanja = datumPrikazivanja;
+		this.vremePrikazivanja = vremePrikazivanja;
 		this.cenaKarte = cenaKarte;
 		this.admin = admin;
 	}
 	
-	
-	
-	public Projekcija(String film, String tipProjekcije, String sala, Date datumIVremePrikazivanja, double cenaKarte,
-			String admin) {
+	public Projekcija(String film, String tipProjekcije, String sala, Date datumPrikazivanja, String vremePrikazivanja,
+			double cenaKarte, String admin) {
+		super();
 		this.film = film;
 		this.tipProjekcije = tipProjekcije;
 		this.sala = sala;
-		this.datumIVremePrikazivanja = datumIVremePrikazivanja;
+		this.datumPrikazivanja = datumPrikazivanja;
+		this.vremePrikazivanja = vremePrikazivanja;
 		this.cenaKarte = cenaKarte;
 		this.admin = admin;
 	}
@@ -67,11 +65,17 @@ public class Projekcija {
 	public void setSala(String sala) {
 		this.sala = sala;
 	}
-	public Date getDatumIVremePrikazivanja() {
-		return datumIVremePrikazivanja;
+	public Date getDatumPrikazivanja() {
+		return datumPrikazivanja;
 	}
-	public void setDatumIVremePrikazivanja(Date datumIVremePrikazivanja) {
-		this.datumIVremePrikazivanja = datumIVremePrikazivanja;
+	public void setDatumPrikazivanja(Date datumPrikazivanja) {
+		this.datumPrikazivanja = datumPrikazivanja;
+	}
+	public String getVremePrikazivanja() {
+		return vremePrikazivanja;
+	}
+	public void setVremePrikazivanja(String vremePrikazivanja) {
+		this.vremePrikazivanja = vremePrikazivanja;
 	}
 	public double getCenaKarte() {
 		return cenaKarte;
@@ -87,22 +91,6 @@ public class Projekcija {
 	}
 	
 	
-//	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, Date datumPrikazivanja,
-//			Time vremePrikazivanja, double cenaKarte, Korisnik admin) {
-//		this.id = id;
-//		this.film = film;
-//		this.tipProjekcije = tipProjekcije;
-//		this.sala = sala;
-//		this.datumPrikazivanja = datumPrikazivanja;
-//		this.vremePrikazivanja = vremePrikazivanja;
-//		this.cenaKarte = cenaKarte;
-//		this.admin = admin;
-//		
-//	}
-	
-
-
-
 	
 	
 }

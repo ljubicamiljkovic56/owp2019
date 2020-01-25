@@ -28,9 +28,6 @@ public class FilmServlet extends HttpServlet {
 			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
 			return;
 		}
-//
-//		int id = Integer.parseInt(request.getParameter("id"));
-//		Film film = FilmDAO.get(id);
 		
 		
 		Map<String, Object> data = new LinkedHashMap<>();
@@ -90,9 +87,7 @@ public class FilmServlet extends HttpServlet {
 				case "update": {
 					int id = Integer.parseInt(request.getParameter("id"));
 					Film film = FilmDAO.get(id);
-					//id = film.getId();
-
-					//id = (id > 0? id: film.getId());
+					
 					String naziv = request.getParameter("naziv");
 					naziv = (!"".equals(naziv)? naziv: film.getNaziv());
 					String reziser = request.getParameter("reziser");
