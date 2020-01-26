@@ -2,6 +2,8 @@ package owp.servlet;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,15 +31,7 @@ public class KorisnikServlet extends HttpServlet {
 			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
 			return;
 		}
-
-//		String korisnickoIme = request.getParameter("korisnickoIme");
-//		Korisnik korisnik = KorisnikDAO.get(korisnickoIme);
-//		
-//		Map<String, Object> data = new LinkedHashMap<>();
-//		
-//		data.put("korisnik", KorisnikDAO.getAll());
 		
-
 		List<Korisnik> filterKorisnici = KorisnikDAO.getAll();
 
 		Map<String, Object> data = new LinkedHashMap<>();
@@ -76,16 +70,26 @@ public class KorisnikServlet extends HttpServlet {
 				case "add": {
 			
 					//int id = ulogovanKorisnik.getId();
-					String korisnickoIme = ulogovanKorisnik.getKorisnickoIme();
-					korisnickoIme = (!"".equals(korisnickoIme)? korisnickoIme: "<nepopunjeno>");
-					String lozinka = ulogovanKorisnik.getLozinka();
-					lozinka = (!"".equals(lozinka)? lozinka: "<nepopunjeno>");
-					String datumRegString = request.getParameter("datumReg");
-					SimpleDateFormat sdf3 = new SimpleDateFormat("dd-mm-yyyy HH:mm:ss");
-					java.sql.Date datumReg = new java.sql.Date(sdf3.parse(datumRegString).getTime());
+					String korisnickoIme = request.getParameter("korisnickoIme");
+					korisnickoIme = (!"".equals(korisnickoIme)? korisnickoIme: "<nepopunjeno korisnickoIme>");
+					String lozinka = request.getParameter("lozinka");
+					lozinka = (!"".equals(lozinka)? lozinka: "<nepopunjena lozinka>");
+					
+					LocalDateTime currentDateTime = LocalDateTime.now();
+					final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+					//Format LocalDateTime
+					String formattedDateTime = currentDateTime.format(formatter);
+					//Verify
+					System.out.println("Formatted LocalDateTime : " + formattedDateTime);    
+					String tajDatum = formattedDateTime;
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+					java.sql.Date sqlDate = new java.sql.Date(sdf.parse(tajDatum).getTime());
+					System.out.println("String converted to java.sql.Date :" + sqlDate);
+					
 					String ulogaS = request.getParameter("uloga");
+					ulogaS = (!"".equals(ulogaS)? ulogaS: "<nepopunjena uloga>");
 					 
-					Korisnik korisnik = new Korisnik(korisnickoIme, lozinka, datumReg, Uloga.valueOf(ulogaS));
+					Korisnik korisnik = new Korisnik(korisnickoIme, lozinka, sqlDate, Uloga.valueOf(ulogaS));
 					KorisnikDAO.add(korisnik);
 					break;
 					
@@ -98,16 +102,23 @@ public class KorisnikServlet extends HttpServlet {
 					korisnickoIme = (!"".equals(korisnickoIme)? korisnickoIme: korisnik.getKorisnickoIme());
 					String lozinka = request.getParameter("lozinka");
 					lozinka = (!"".equals(lozinka)? lozinka: korisnik.getLozinka());
-				
 					
-					String datumRegString = request.getParameter("datumReg");
-					SimpleDateFormat sdf3 = new SimpleDateFormat("dd-mm-yyyy HH:mm:ss");
-					java.sql.Date datumReg = new java.sql.Date(sdf3.parse(datumRegString).getTime());
+					LocalDateTime currentDateTime = LocalDateTime.now();
+					final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+					//Format LocalDateTime
+					String formattedDateTime = currentDateTime.format(formatter);
+					//Verify
+					System.out.println("Formatted LocalDateTime : " + formattedDateTime);    
+					String tajDatum = formattedDateTime;
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+					java.sql.Date sqlDate = new java.sql.Date(sdf.parse(tajDatum).getTime());
+					System.out.println("String converted to java.sql.Date :" + sqlDate);
 					Uloga uloga = Uloga.valueOf(request.getParameter("uloga"));
 					
+					korisnik.setId(id);
 					korisnik.setKorisnickoIme(korisnickoIme);
 					korisnik.setLozinka(lozinka);
-					korisnik.setDatumReg(datumReg);
+					korisnik.setDatumReg(sqlDate);
 					korisnik.setUloga(uloga);
 					KorisnikDAO.update(korisnik);
 					break;

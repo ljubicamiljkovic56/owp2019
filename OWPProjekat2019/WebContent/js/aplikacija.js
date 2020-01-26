@@ -86,7 +86,9 @@ $(document).ready(function(){
 					$('#adminParagraph').append('<p></p>');
 					$('#adminParagraph').append('<a href="korisnici.html">Pregled korisnika</a>');
 					$('#adminParagraph').append('<p></p>');
-					$('#adminParagraph').append('<a href="projekcijeadmin.html">Pregled projekcija - admin</a>')
+					$('#adminParagraph').append('<a href="projekcijeadmin.html">Pregled projekcija - admin</a>');
+					$('#adminParagraph').append('<p></p>');
+					$('#adminParagraph').append('<a href="karte.html">Pregled karata</a>');
 					
 				}
 			}

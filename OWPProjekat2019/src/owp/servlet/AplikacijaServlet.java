@@ -30,8 +30,6 @@ public class AplikacijaServlet extends HttpServlet {
 			return;
 		}
 		
-//		int id = Integer.parseInt(request.getParameter("id"));
-//		id = (id > 0? id: 0);
 		String naziv = request.getParameter("naziv");
 		naziv = (naziv != null? naziv: "");
 		String reziser = request.getParameter("reziser");

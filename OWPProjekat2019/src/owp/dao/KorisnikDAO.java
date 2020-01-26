@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import owp.model.Korisnik;
 import owp.model.Korisnik.Uloga;
 
@@ -55,11 +54,11 @@ public class KorisnikDAO {
 	//get id u servletu se koristi pre update-a
 	public static Korisnik get(int id) {
 		Connection conn = ConnectionManager.getConnection();
-
+		Korisnik korisnik = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT lozinka, datumReg, uloga FROM korisnici WHERE korisnickoIme = ?";
+			String query = "SELECT korisnickoIme, lozinka, datumReg, uloga FROM korisnik WHERE id = ?";
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, id);
@@ -68,15 +67,13 @@ public class KorisnikDAO {
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
-				int index = 1;
-				int id1 = rset.getInt(index++);
-				String korisnickoIme = rset.getString(index++);
-				String lozinka = rset.getString(index++);
-				Date datumReg = rset.getDate("datumReg");
-				Uloga uloga = Uloga.valueOf(rset.getString(index++));
+				String korisnickoIme = rset.getString(1);
+				String lozinka = rset.getString(2);
+				Date datumReg = rset.getDate(3);
+				Uloga uloga = Uloga.valueOf(rset.getString(4));
 				
 
-				return new Korisnik(id1, korisnickoIme,lozinka,datumReg,uloga);
+				korisnik =  new Korisnik(id,korisnickoIme,lozinka,datumReg,uloga);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -86,7 +83,7 @@ public class KorisnikDAO {
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
 
-		return null;
+		return korisnik;
 	}
 	
 	//get po korisnickom imenu kod provere da li vec postoji korisnicko ime pri registraciji
@@ -217,29 +214,41 @@ public class KorisnikDAO {
 		return retVal;
 	}
 
+	//izmena korisnika
 	public static boolean update(Korisnik korisnik) {
 		Connection conn = ConnectionManager.getConnection();
+
+		boolean retVal = false;
+		
 		PreparedStatement pstmt = null;
 		try {
-			String query = "UPDATE korisnik SET korisnickoIme = ?, lozinka = ?, uloga = ?"
-						+ "WHERE id = ?";
+			String query = "UPDATE korisnik SET korisnickoIme = ?, lozinka = ?, datumReg = ?, uloga = ?"
+					+ "WHERE id = ?";
+
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
 			pstmt.setString(index++, korisnik.getKorisnickoIme());
 			pstmt.setString(index++, korisnik.getLozinka());
 			pstmt.setDate(index++, korisnik.getDatumReg());
 			pstmt.setString(index++, korisnik.getUloga().toString());
+			pstmt.setInt(index++, korisnik.getId());
 			System.out.println(pstmt);
+
+			if (pstmt.executeUpdate() == 1) {
+				retVal = true;
+				
+			}
 			
-			return pstmt.executeUpdate() == 1;
-		}catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
-		}finally {
+		} finally {
 			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
-		return false;
+		
+		return retVal;
 	}
+	
 
 	//brisanje korisnika po id-u
 	public static boolean delete(String id) {

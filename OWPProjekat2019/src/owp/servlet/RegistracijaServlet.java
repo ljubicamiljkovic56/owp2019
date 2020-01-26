@@ -50,7 +50,6 @@ public class RegistracijaServlet extends HttpServlet {
 			
 			Korisnik korisnik = new Korisnik(korisnickoIme, lozinka, sqlDate , Uloga.korisnik);
 			KorisnikDAO.add(korisnik);
-			//KorisnikDAO.add(korisnickoIme, lozinka);
 
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);
 		} catch (Exception ex) {

@@ -100,7 +100,7 @@ $(document).ready(function(){
 		for(it of korisniciZaTabelu){
 			korisnikTable.append(
 					'<tr>' + 
-					'<td><a href="korisnik.html?id=' + it.korisnickoIme + '">' + it.korisnickoIme + '</td>' +
+					'<td><a href="izmenikorisnika.html?korisnickoIme=' + it.korisnickoIme + '&id=' + it.id +  '">' + it.korisnickoIme + '</td>' +
 					'<td>' + new Date(it.datumReg) + '</td>' + 
 					'<td>' + it.uloga + '</td>' +
 					'<td>' + 
