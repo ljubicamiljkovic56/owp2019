@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pregled karata</title>
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="js/karte.js"></script>
+</head>
+<body>
+<h3>Karte:</h3>
+	<table border="1" id="karteTable">
+		<tr bgcolor="lightblue">
+			<th><a id="sortProjekcija">Projekcija</a></th>
+			<th><a id="sortSediste">Sediste</a></th>
+			<th><a id="sortDatumProdaje">Datum prodaje</a></th>
+			<th><a id="sortVremeProdaje">Vreme prodaje</a></th>
+			<th><a id="sortKorisnik">Korisnik</a></th>
+			<th/>
+		</tr>
+		<tr bgcolor="lightblue">
+			<td align="center"><input type="text" id="filterProjekcijaInput"></td>
+			<td align="center"><input type="text" id="filterSedisteInput"></td>
+			<td align="center"><input type="text" id="filterDatumProdajeInput"></td>
+			<td align="center"><input type="text" id="filterVremeProdajeInput"></td>
+			<td align="center"><input type="text" id="filterKorisnikInput"></td>
+		</tr>
+	</table>
+	<p><a href="aplikacija.html">Povratak na glavnu stranu</a></p>
+	<p><a href="glavna.html" id="logoutLink">Odjava</a></p>
+</body>
+</html>

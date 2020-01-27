@@ -2,7 +2,10 @@ package owp.servlet;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -12,12 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import owp.dao.KartaDAO;
 import owp.dao.KorisnikDAO;
-import owp.dao.ProjekcijaDAO;
 import owp.model.Karta;
 import owp.model.Korisnik;
-import owp.model.Projekcija;
-import owp.model.Korisnik.Uloga;
-
 @SuppressWarnings("serial")
 public class KartaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,11 +30,11 @@ public class KartaServlet extends HttpServlet {
 			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
 			return;
 		}
-		int id = Integer.parseInt(request.getParameter("id"));
-		Karta karta = KartaDAO.get(id);
+		
+		List<Karta> filterKarte = KartaDAO.getAll();
 		
 		Map<String, Object> data = new LinkedHashMap<>();
-		data.put("karta", karta);
+		data.put("filterKarte", filterKarte);
 		data.put("ulogovanKorisnikUloga", ulogovanKorisnik.getUloga());
 
 		request.setAttribute("data", data);
@@ -54,48 +53,42 @@ public class KartaServlet extends HttpServlet {
 			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
 			return;
 		}
-		if (ulogovanKorisnik.getUloga() != Uloga.admin) {
-			request.getRequestDispatcher("./UnauthorizedServlet").forward(request, response);
-			return;
-		}
+//		if (ulogovanKorisnik.getUloga() != Uloga.admin) {
+//			request.getRequestDispatcher("./UnauthorizedServlet").forward(request, response);
+//			return;
+//		}
 		
 		//id, projekcija, sediste, datumProdaje, vremeProdaje, korisnik
 		try {
 			String action = request.getParameter("action");
 			switch (action) {
 				case "add": {
-					int id = Integer.parseInt(request.getParameter("id"));
-					id = (id > 0? id: 0);
+					//int id = Integer.parseInt(request.getParameter("id"));
+					//id = (id > 0? id: 0);
 					String projekcija = request.getParameter("projekcija");
 					projekcija = (!"".equals(projekcija)? projekcija: "<nepopunjena projekcija>");
 					int sediste = Integer.parseInt(request.getParameter("sediste"));
 					sediste = (sediste > 0? sediste: 0);
 					
-					SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
-					String najranijiDatum = "01-01-2019";
-					java.util.Date temp = sdf.parse(najranijiDatum);
-					java.sql.Date sqlNajranijiDatum = new java.sql.Date(temp.getTime());
+					LocalDateTime currentDateTime = LocalDateTime.now();
+					final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+					//Format LocalDateTime
+					String formattedDateTime = currentDateTime.format(formatter);
+					//Verify
+					System.out.println("Formatted LocalDateTime : " + formattedDateTime);    
+					String tajDatum = formattedDateTime;
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+					java.sql.Date sqlDate = new java.sql.Date(sdf.parse(tajDatum).getTime());
+					System.out.println("String converted to java.sql.Date :" + sqlDate);
 					
-					String najkasnijiDatum = "01-01-2021";
-					temp = sdf.parse(najkasnijiDatum);
-					java.sql.Date sqlNajkasnijiDatum = new java.sql.Date(temp.getTime());
-					
-					String datumProdajeString = request.getParameter("datumProdaje");
-					SimpleDateFormat sdf2 = new SimpleDateFormat("dd-mm-yyyy HH:mm:ss");
-					java.sql.Date datumProdaje = new java.sql.Date(sdf2.parse(datumProdajeString).getTime());
-					
-					if (datumProdaje.before(sqlNajkasnijiDatum) && datumProdaje.after(sqlNajranijiDatum)) {
-						//prikazi taj datum
-					}
-					
-					//ne znam kako vreme da parsiram
-//					String vreme = "00:00";
-//					Time vremeProdaje = new Time(vreme)
+					String vremeProdaje = request.getParameter("vremeProdaje");
+					vremeProdaje = (!"".equals(vremeProdaje)? vremeProdaje: "<nepopunjeno vreme>");
 				
 					String korisnik = request.getParameter("korisnik");
 					korisnik = (!"".equals(korisnik)? korisnik: "<nepopunjen korisnik>");
+					
 
-					Karta karta = new Karta(id,projekcija, sediste, datumProdaje, vremeProdaje,korisnik);
+					Karta karta = new Karta(projekcija, sediste, sqlDate, vremeProdaje, ulogovanKorisnik.getKorisnickoIme());
 					KartaDAO.add(karta);
 					break;
 				}
@@ -107,36 +100,29 @@ public class KartaServlet extends HttpServlet {
 					String projekcija = request.getParameter("projekcija");
 					projekcija = (!"".equals(projekcija)? projekcija: karta.getProjekcija().toString());
 					int sediste = Integer.parseInt(request.getParameter("sediste"));
-					sediste = (sediste > 0? sediste: karta.getSediste().getRedniBroj());
+					sediste = (sediste > 0? sediste: karta.getSediste());
 					
-					SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
-					String najranijiDatum = "01-01-2019";
-					java.util.Date temp = sdf.parse(najranijiDatum);
-					java.sql.Date sqlNajranijiDatum = new java.sql.Date(temp.getTime());
+					LocalDateTime currentDateTime = LocalDateTime.now();
+					final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+					//Format LocalDateTime
+					String formattedDateTime = currentDateTime.format(formatter);
+					//Verify
+					System.out.println("Formatted LocalDateTime : " + formattedDateTime);    
+					String tajDatum = formattedDateTime;
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+					java.sql.Date sqlDate = new java.sql.Date(sdf.parse(tajDatum).getTime());
+					System.out.println("String converted to java.sql.Date :" + sqlDate);
 					
-					String najkasnijiDatum = "01-01-2021";
-					temp = sdf.parse(najkasnijiDatum);
-					java.sql.Date sqlNajkasnijiDatum = new java.sql.Date(temp.getTime());
-					
-					String datumProdajeString = request.getParameter("datumProdaje");
-					SimpleDateFormat sdf2 = new SimpleDateFormat("dd-mm-yyyy HH:mm:ss");
-					java.sql.Date datumProdaje = new java.sql.Date(sdf2.parse(datumProdajeString).getTime());
-					
-					if (datumProdaje.before(sqlNajkasnijiDatum) && datumProdaje.after(sqlNajranijiDatum)) {
-						//prikazi taj datum
-					}
-					
-					//ne znam kako vreme da parsiram
-//					String vreme = "00:00";
-//					Time vremePrikazivanja = new Time(vreme)
+					String vremeProdaje = request.getParameter("vremeProdaje");
+					vremeProdaje = (!"".equals(vremeProdaje)? vremeProdaje: karta.getVremeProdaje());
 					
 					String korisnik = request.getParameter("korisnik");
-					korisnik = (!"".equals(korisnik)? korisnik: karta.getKorisnik().getKorisnickoIme());
+					korisnik = (!"".equals(korisnik)? korisnik: ulogovanKorisnik.getKorisnickoIme());
 					
 					karta.setId(id);
 					karta.setProjekcija(projekcija);
 					karta.setSediste(sediste);
-					karta.setDatumProdaje(datumProdaje);
+					karta.setDatumProdaje(sqlDate);
 					karta.setVremeProdaje(vremeProdaje);
 					karta.setKorisnik(korisnik);
 					KartaDAO.update(karta);
