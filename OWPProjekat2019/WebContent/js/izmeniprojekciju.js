@@ -53,7 +53,7 @@ $(document).ready(function(){
  					$('#korisnikForm').hide()
  					$('#adminForm').show();
 
- 					$('button').on('click', function(event) {
+ 					$('#updateSubmit').on('click', function(event) {
  						var id = idInput.val();
  						var film = filmInput.val();
  						var tipProjekcije = tipProjekcijeInput.val();

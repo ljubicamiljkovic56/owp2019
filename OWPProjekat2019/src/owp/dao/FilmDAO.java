@@ -54,48 +54,6 @@ public class FilmDAO {
 		return film;
 	}
 	
-	
-//	public static Film getNaziv(String naziv) {
-//		Connection conn = ConnectionManager.getConnection();
-//
-//		PreparedStatement pstmt = null;
-//		ResultSet rset = null;
-//		try {
-//			String query = "SELECT * FROM film WHERE naziv = ? ";
-//			
-//			pstmt = conn.prepareStatement(query);
-//			pstmt.setInt(1, id);
-//			System.out.println(pstmt);
-//
-//			rset = pstmt.executeQuery();
-//			
-//			if (rset.next()) {
-//				int index = 1;
-//				int id1 = rset.getInt(index++);
-//				String naziv1 = rset.getString(index++);
-//				String reziser = rset.getString(index++);
-//				String glumci = rset.getString(index++);
-//				String zanrovi = rset.getString(index++);
-//				int trajanje = rset.getInt(index++);
-//				String distributer = rset.getString(index++);
-//				String zemljaPorekla = rset.getString(index++);
-//				int godinaProizvodnje = rset.getInt(index++);
-//				String opis = rset.getString(index++);
-//				
-//				return new Film(id1, naziv1, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis);
-//			}
-//		}		
-//		catch (Exception ex) {
-//			ex.printStackTrace();
-//		} finally {
-//			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
-//			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
-//			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
-//		}
-//		
-//		return null;
-//	}
-	
 	public static List<Film> getAll(){
 		List<Film> filmovi = new ArrayList<>();
 		
@@ -148,94 +106,6 @@ public class FilmDAO {
 	}
 
 	
-//	public static List<Film> getAll(){
-//				
-//		
-//		List<Film> filmovi = new ArrayList<Film>();
-//		
-//		Connection conn = ConnectionManager.getConnection();
-//		
-//		PreparedStatement pstmt = null;
-//		ResultSet rset = null;
-//		try {
-////			String query = "SELECT * FROM film WHERE "
-////					+ "naziv = ? AND reziser = ? AND glumci = ? AND zanrovi = ? AND distributer = ? AND zemljaPorekla = ? AND opis = ?";
-////			
-////			if (trajanje > 0) {
-////				query += " AND trajanje = ?";
-////			}
-////			if (godinaProizvodnje > 0) {
-////				query += " AND godinaProizvodnje = ?";
-////			}
-//			String query = "SELECT * FROM film";
-//
-//
-//			pstmt = conn.prepareStatement(query);
-////			int index = 1;
-////			pstmt.setString(index++, "%" + naziv + "%");
-////			pstmt.setString(index++, reziser);
-////			pstmt.setString(index++, glumci);
-////			pstmt.setString(index++, zanrovi + "%");
-////			pstmt.setString(index++, distributer + "%");
-////			pstmt.setString(index++, zemljaPorekla + "%");
-////			pstmt.setString(index++, opis + "%");
-////			if (trajanje > 0) {
-////				pstmt.setInt(index++, trajanje);
-////			}
-////			if (godinaProizvodnje > 0) {
-////				pstmt.setInt(index++, godinaProizvodnje);
-////			}
-//			
-//			
-//			System.out.println(pstmt);
-//
-//			rset = pstmt.executeQuery();
-//
-//			System.out.println("presao query");
-//			System.out.println(rset + " evo rseta");
-//			
-//			while (rset.next()) {
-////				index = 1;
-////				System.out.println("usao u while petlju");
-////				System.out.println(index);
-////				int filmId = rset.getInt(index++);
-////				String filmNaziv = rset.getString(index++);
-////				String filmReziser = rset.getString(index++);
-////				String filmGlumci = rset.getString(index++);
-////				String filmZanrovi = rset.getString(index++);
-////				int filmTrajanje = rset.getInt(index++);
-////				String filmDistributer = rset.getString(index++);
-////				String filmZemljaPorekla = rset.getString(index++);
-////				int filmGodinaProizvodnje = rset.getInt(index++);
-////				String filmOpis = rset.getString(index++);
-//
-////				Film film = new Film(filmId, filmNaziv, filmReziser, filmGlumci, filmZanrovi, filmTrajanje, filmDistributer, filmZemljaPorekla, filmGodinaProizvodnje, filmOpis);
-////				film.setId(rset.getInt(1));
-////				film.setNaziv(rset.getString(2));
-////				film.setReziser(rset.getString(3));
-////				film.setGlumci(rset.getString(4));
-////				film.setZanrovi(rset.getString(5));
-////				film.setTrajanje(rset.getInt(6));
-////				film.setDistributer(rset.getString(7));
-////				film.setZemljaPorekla(rset.getString(8));
-////				film.setGodinaProizvodnje(rset.getInt(9));
-////				film.setOpis(rset.getString(10));
-////				filmovi.add(film);
-////				
-////				System.out.println("kraj metode ");
-////				System.out.println(filmovi);
-//			}
-//		}catch(Exception ex) {
-//			ex.printStackTrace();
-//		}finally {
-//			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
-//			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
-//			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
-//		}
-//		return filmovi;
-//		
-//	}
-	
 	public static List<Film> getAllIndex(String naziv, String zanrovi, int trajanje, String distributer, 
 			String zemljaPorekla, int godinaProizvodnje, String opis){
 		
@@ -247,7 +117,7 @@ public class FilmDAO {
 		ResultSet rset = null;
 		try {
 			String query = "SELECT * FROM film WHERE "
-					+ "naziv = ? AND zanrovi = ? AND distributer = ? AND zemljaPorekla = ? ";
+					+ "naziv LIKE ? AND zanrovi LIKE ? AND distributer LIKE ? AND zemljaPorekla LIKE ? ";
 			
 			if (trajanje > 0) {
 				query += " AND trajanje = ?";
@@ -262,11 +132,10 @@ public class FilmDAO {
 
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
-			pstmt.setString(index++, naziv);
-			pstmt.setString(index++, zanrovi);
-			pstmt.setString(index++, distributer);
+			pstmt.setString(index++, "%" + naziv + "%");
+			pstmt.setString(index++, "%" + zanrovi + "%");
+			pstmt.setString(index++, "%" + distributer + "%");
 			pstmt.setString(index++, zemljaPorekla);
-			pstmt.setString(index++, opis);
 			if (trajanje > 0) {
 				pstmt.setInt(index++, trajanje);
 			}
@@ -284,38 +153,33 @@ public class FilmDAO {
 			System.out.println("nakon execute query");
 			System.out.println(query);
 			
-			if(rset.next()) {
-				int id = rset.getInt(1);
-				String filmNaziv = rset.getString(2);
-				String reziser = rset.getString(3);
-				String glumci = rset.getString(4);
-				String filmZanrovi = rset.getString(5);
-				int filmTrajanje = rset.getInt(6);
-				String filmDistributer = rset.getString(7);
-				String filmZemljaPorekla = rset.getString(8);
-				int filmGodinaProizvodnje = rset.getInt(9);
-				String filmOpis = rset.getString(10);
+			while(rset.next()) {
+				int id = rset.getInt("id");
+				String filmNaziv = rset.getString("naziv");
+				String reziser = rset.getString("reziser");
+				String glumci = rset.getString("glumci");
+				String filmZanrovi = rset.getString("zanrovi");
+				int filmTrajanje = rset.getInt("trajanje");
+				String filmDistributer = rset.getString("distributer");
+				String filmZemljaPorekla = rset.getString("zemljaPorekla");
+				int filmGodinaProizvodnje = rset.getInt("godinaProizvodnje");
+				String filmOpis = rset.getString("opis");
 				
-			//	Film film = new Film(id, filmNaziv, reziser, glumci, filmZanrovi, filmTrajanje, filmDistributer, filmZemljaPorekla, filmGodinaProizvodnje, filmOpis);
-			//	filmovi.add(film);
-
 				Film film = new Film(id,filmNaziv,reziser,glumci,filmZanrovi,filmTrajanje,filmDistributer,filmZemljaPorekla,filmGodinaProizvodnje,filmOpis);
-				film.setId((rset.getInt(1)));
-				film.setNaziv(rset.getString(2));
-				film.setReziser((rset.getString(3)));
-				film.setGlumci(rset.getString(4));
-				film.setZanrovi((rset.getString(5)));
-				film.setTrajanje((rset.getInt(6)));
-				film.setDistributer((rset.getString(7)));
-				film.setZemljaPorekla((rset.getString(8)));
-				film.setGodinaProizvodnje(rset.getInt(9));
-				film.setOpis(rset.getString(10));
+				film.setId(id);
+				film.setNaziv(filmNaziv);
+				film.setReziser(reziser);
+				film.setGlumci(glumci);
+				film.setZanrovi(filmZanrovi);
+				film.setTrajanje(filmTrajanje);
+				film.setDistributer(filmDistributer);
+				film.setZemljaPorekla(filmZemljaPorekla);
+				film.setGodinaProizvodnje(filmGodinaProizvodnje);
+				film.setOpis(filmOpis);
 				filmovi.add(film);	
 
 
 			}
-			//rset.close();
-		//	pstmt.close();
 			System.out.println("zasto nema ispisa?");
 		}
 		catch (Exception ex) {

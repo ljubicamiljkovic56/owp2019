@@ -19,7 +19,7 @@ $(document).ready(function(){
 	var cenaKarteInput = $('#cenaKarteInput');
 	var adminInput = $('#adminInput');
 	
-	$('button').on('click', function(event){
+	$('#projekcijaSubmit').on('click', function(event){
 		var film = filmInput.val();
 		var tipProjekcije = tipProjekcijeInput.val();
 		var sala = salaInput.val();

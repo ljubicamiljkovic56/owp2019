@@ -149,4 +149,14 @@
     <servlet-name>ProjekcijeServlet</servlet-name>
     <url-pattern>/ProjekcijeServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>IzvestajServlet</display-name>
+    <servlet-name>IzvestajServlet</servlet-name>
+    <servlet-class>owp.servlet.IzvestajServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IzvestajServlet</servlet-name>
+    <url-pattern>/IzvestajServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

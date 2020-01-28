@@ -38,19 +38,20 @@ public class AplikacijaServlet extends HttpServlet {
 		glumci = (glumci != null? glumci: "");
 		String zanrovi = request.getParameter("zanrovi");
 		zanrovi = (zanrovi != null? zanrovi: "");
-//		int trajanje = Integer.parseInt(request.getParameter("trajanje"));
-//		trajanje = (trajanje > 0? trajanje: 0);
+	//	int trajanje = Integer.parseInt(request.getParameter("trajanje"));
+	//	trajanje = (trajanje > 0? trajanje: 0);
 		String distributer = request.getParameter("distributer");
 		distributer = (distributer != null? distributer: "");
 		String zemljaPorekla = request.getParameter("zemljaPorekla");
 		zemljaPorekla = (zemljaPorekla != null? zemljaPorekla: "");
-//		int godinaProizvodnje = Integer.parseInt(request.getParameter("godinaProizvodnje"));
-//		godinaProizvodnje = (godinaProizvodnje > 0? godinaProizvodnje: 0);
+	//	int godinaProizvodnje = Integer.parseInt(request.getParameter("godinaProizvodnje"));
+	//	godinaProizvodnje = (godinaProizvodnje > 0? godinaProizvodnje: 0);
 		String opis = request.getParameter("opis");
 		opis = (opis != null? opis: "");
 	
 
 		List<Film> filterFilmovi = FilmDAO.getAll();
+		//List<Film> filterFilmovi = FilmDAO.getAllIndex(naziv, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis);
 
 		Map<String, Object> data = new LinkedHashMap<>();
 		data.put("filterFilmovi", filterFilmovi);
