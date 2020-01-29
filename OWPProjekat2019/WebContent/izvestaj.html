@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Izvestaj</title>
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="js/izvestaj.js"></script>
+</head>
+<body>
+<h3>Izvestaj:</h3>
+	<table border="1" id="izvestajTable">
+		<tr bgcolor="lightblue">
+			<th><a id="sortNazivFilma">Naziv filma</a></th>
+			<th><a id="sortBrojProjekcija">Broj projekcija</a></th>
+			<th><a id="sortBrojKarata">Broj prodatih karata</a></th>
+			<th><a id="sortUkupnaCenaKarata">Ukupna cena prodatih karata</a></th>
+			<th/>
+		</tr>
+		<tr bgcolor="lightblue">
+			<td align="center"><input type="text" id="filterNazivFilmaInput"></td>
+			<td align="center"><input type="text" id="filterBrojProjekcijaInput"></td>
+			<td align="center"><input type="text" id="filterBrojKarataInput"></td>
+			<td align="center"><input type="text" id="filterUkupnaCenaKarataInput"></td>
+		</tr>
+	</table>
+	<p><a href="aplikacija.html">Povratak na glavnu stranu</a></p>
+	<p><a href="glavna.html" id="logoutLink">Odjava</a></p>
+</body>
+</html>
