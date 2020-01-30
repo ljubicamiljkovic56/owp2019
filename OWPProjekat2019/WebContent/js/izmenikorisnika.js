@@ -21,7 +21,7 @@ $(document).ready(function(){
 	
  	
  	function getKorisnik() {
- 		$.get('KorisnikServlet', {'action': 'get'}, function(data) {
+ 		$.get('KorisnikServlet', {'action': 'ulogovanKorisnikUloga'}, function(data) {
  			console.log(data);
 
  			if (data.status == 'unauthenticated') {
@@ -30,13 +30,15 @@ $(document).ready(function(){
  			}
  			
  			if (data.status == 'success') {
- 				var korisnik1 = data.korisnik1;
- 				console.log(korisnik1);
+ 				//var korisnik1 = data.korisnik1;
+ 				//console.log(korisnik1);
+ 				console.log('success');
  				if (data.ulogovanKorisnikUloga == 'korisnik') {
  					console.log('ispis...');
  					$('#korisnikForm').hide();
  					$('#adminForm').hide();
  					
+ 					alert('test 1');
  					
  					$('#korisnickoImeCell').text(korisnik1.korisnickoIme);
  					$('#lozinkaCell').text(korisnik1.lozinka);
@@ -47,6 +49,8 @@ $(document).ready(function(){
  					console.log(data);
  					$('#korisnikForm').hide()
  					$('#adminForm').show();
+ 					
+ 					alert('test 2');
 
  					$('button').on('click', function(event) {
  						var id = idInput.val();
@@ -60,6 +64,8 @@ $(document).ready(function(){
  						console.log('datumReg: ' + datumReg);
  						console.log('uloga: ' + uloga);
 
+ 						alert('test 3');
+ 						
  						params = {
  							'action': 'update',
  							'id': id, 
@@ -91,4 +97,5 @@ $(document).ready(function(){
  	}
  	
  	getKorisnik();
+ 	alert('test 4');
 });

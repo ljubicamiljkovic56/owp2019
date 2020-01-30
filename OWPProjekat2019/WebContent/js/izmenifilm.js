@@ -27,7 +27,7 @@ $(document).ready(function(){
 	
  	
  	function getFilm() {
- 		$.get('FilmServlet', {'action': 'get'}, function(data) {
+ 	 	$.get('FilmServlet', {'action': 'get' }, function(data) {
  			console.log(data);
 
  			if (data.status == 'unauthenticated') {
@@ -43,7 +43,7 @@ $(document).ready(function(){
  					$('#korisnikForm').show();
  					$('#adminForm').hide();
  					
- 					
+ 					$('#idCell').text(film1.id);
  					$('#nazivCell').text(film1.naziv);
  					$('#reziserCell').text(film1.reziser);
  					$('#glumciCell').text(film1.glumci);

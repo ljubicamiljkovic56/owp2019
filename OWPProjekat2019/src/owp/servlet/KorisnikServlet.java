@@ -113,13 +113,19 @@ public class KorisnikServlet extends HttpServlet {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 					java.sql.Date sqlDate = new java.sql.Date(sdf.parse(tajDatum).getTime());
 					System.out.println("String converted to java.sql.Date :" + sqlDate);
-					Uloga uloga = Uloga.valueOf(request.getParameter("uloga"));
+					
+//					String datumRegString = request.getParameter("datumReg");
+//					SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
+//					java.sql.Date datumReg = new java.sql.Date(sdf3.parse(datumRegString).getTime());
+					
+					String ulogaS = request.getParameter("uloga");
+					ulogaS = (!"".equals(ulogaS)? ulogaS: korisnik.getUloga().toString());
 					
 					korisnik.setId(id);
 					korisnik.setKorisnickoIme(korisnickoIme);
 					korisnik.setLozinka(lozinka);
 					korisnik.setDatumReg(sqlDate);
-					korisnik.setUloga(uloga);
+					korisnik.setUloga(Uloga.valueOf(ulogaS));
 					KorisnikDAO.update(korisnik);
 					break;
 					

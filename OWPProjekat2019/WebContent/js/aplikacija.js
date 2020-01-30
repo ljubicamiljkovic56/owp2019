@@ -89,6 +89,8 @@ $(document).ready(function(){
 					$('#adminParagraph').append('<a href="projekcijeadmin.html">Pregled projekcija - admin</a>');
 					$('#adminParagraph').append('<p></p>');
 					$('#adminParagraph').append('<a href="karte.html">Pregled karata</a>');
+					$('#adminParagraph').append('<p></p>');
+					$('#adminParagraph').append('<a href="izvestaj.html">Izvestaj</a>');
 					
 				}
 			}
@@ -169,7 +171,7 @@ $(document).ready(function(){
 					'<td>' + it.distributer + '</td>' +
 					'<td>' + it.zemljaPorekla + '</td>' +
 					'<td>' + it.godinaProizvodnje + '</td>' +
-					'<td>' + it.opis + '</td>' + 
+					'<td><a href="filmzakorisnika.html?naziv=' + it.naziv + '&id=' + it.id + '">' + it.opis +  '</td>' + 
 					'<td>' + 
 					'<form>' + '<input type="submit" value="Obrisi" class="deleteSubmit" filmID="' + it.id + '">' + 
 				'</form>' + '</td>' + 

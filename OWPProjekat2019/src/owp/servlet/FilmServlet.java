@@ -29,9 +29,23 @@ public class FilmServlet extends HttpServlet {
 			return;
 		}
 		
+		//List<Film> film1 = FilmDAO.getAll();
 		
 		Map<String, Object> data = new LinkedHashMap<>();
-		//data.put("film", film);
+		//data.put("film1", film1);
+		//System.out.println(film1);
+		
+//		String action = request.getParameter("action");
+//		if (action != null) {
+//			switch (action) {
+//				case "ulogovanKorisnikUloga": {
+//					data.put("ulogovanKorisnikUloga", ulogovanKorisnik.getUloga());
+//					break;
+//				}
+//			}
+//		}
+		//ovde je bio samo data
+
 		data.put("ulogovanKorisnikUloga", ulogovanKorisnik.getUloga());
 
 		request.setAttribute("data", data);
@@ -125,6 +139,15 @@ public class FilmServlet extends HttpServlet {
 					FilmDAO.delete(id);
 					break;
 				}
+//				//case get je dodat
+//				case "get": {
+//					int id = Integer.parseInt(request.getParameter("id"));
+//					Film film1 = FilmDAO.get(id);
+//					Map<String, Object> data2 = new LinkedHashMap<>();
+//					data2.put("film1", film1);
+//					request.setAttribute("data2", data2);
+//					break;
+//				}
 			}
 			
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);

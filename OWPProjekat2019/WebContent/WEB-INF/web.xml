@@ -159,4 +159,14 @@
     <servlet-name>IzvestajServlet</servlet-name>
     <url-pattern>/IzvestajServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FilmZaKorisnikaServlet</display-name>
+    <servlet-name>FilmZaKorisnikaServlet</servlet-name>
+    <servlet-class>owp.servlet.FilmZaKorisnikaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FilmZaKorisnikaServlet</servlet-name>
+    <url-pattern>/FilmZaKorisnikaServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

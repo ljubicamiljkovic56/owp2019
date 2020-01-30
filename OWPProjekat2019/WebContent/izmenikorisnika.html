@@ -7,27 +7,28 @@
 <script src="js/izmenikorisnika.js"></script>
 <body>
 <h3>Izmena korisnika:</h3>
-<!-- 	<form id="korisnikForm"> -->
-<!-- 		<table> -->
-<!-- 			<tr><td align="right">ID:</td><td><input type="text" id="idCell"/></td></tr> -->
-<!-- 			<tr><td align="right">KorisnickoIme:</td><td><input type="text" id="korisnickoImeCell"/></td></tr> -->
-<!-- 			<tr><td align="right">Lozinka:</td><td><input type="text" id="lozinkaCell"/></td></tr> -->
-<!-- 			<tr><td align="right">DatumReg:</td><td><input type="text" id="datumRegCell"/></td></tr> -->
-<!-- 			<tr><td align="right">Uloga:</td><td><input type="text" id="ulogaCell"/></td></tr> -->
-<!-- 		</table> -->
-<!-- 	</form> -->
-	<form id="adminForm">
+	<form id="korisnikForm">
 		<table>
-			<tr><td align="right">ID:</td><td><input type="hidden" id="idInput" value="http://localhost:8080/OWPProjekat2019/izmenikorisnika.html?id="/></td></tr>
+			<tr><td align="right">KorisnickoIme:</td><td><input type="text" id="korisnickoImeCell"/></td></tr>
+			<tr><td align="right">Lozinka:</td><td><input type="password" id="lozinkaCell"/></td></tr>
+			<tr><td align="right">DatumReg:</td><td><input type="hidden" id="datumRegCell"/></td></tr>
+			<tr><td align="right">Uloga:</td><td><input type="text" id="ulogaCell"/></td></tr>
+		</table>
+	</form>
+	<button>Test</button>
+	<form id="adminForm">
+	
+		<table>
+			<tr><td align="right">ID:</td><td><input type="hidden" id="idInput" value="http://localhost:8080/OWPProjekat2019/izmenifilm.html?id="/></td></tr>
 			<tr><td align="right">KorisnickoIme:</td><td><input type="text" id="korisnickoImeInput"/></td></tr>
-			<tr><td align="right">Lozinka:</td><td><input type="text" id="lozinkaInput"/></td></tr>
+			<tr><td align="right">Lozinka:</td><td><input type="password" id="lozinkaInput"/></td></tr>
 			<tr><td align="right">DatumReg:</td><td><input type="hidden" id="datumRegInput"/></td></tr>
 			<tr><td align="right">Uloga:</td><td><input type="text" id="ulogaInput"/></td></tr>
 			<tr><td/><td><input type="submit" value="Izmeni" id="updateSubmit"></td></tr>
 		</table>
-		<button>Test</button>
+		
 	</form>
 	<p><a href="aplikacija.html">Povratak</a></p>
-	<p><a href="" id="logoutLink">Odjava</a></p>
+	<p><a href="glavna.html" id="logoutLink">Odjava</a></p>
 </body>
 </html>
