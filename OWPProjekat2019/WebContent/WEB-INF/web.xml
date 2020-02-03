@@ -169,4 +169,44 @@
     <servlet-name>FilmZaKorisnikaServlet</servlet-name>
     <url-pattern>/FilmZaKorisnikaServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProjekcijaZaKorisnikaServlet</display-name>
+    <servlet-name>ProjekcijaZaKorisnikaServlet</servlet-name>
+    <servlet-class>owp.servlet.ProjekcijaZaKorisnikaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProjekcijaZaKorisnikaServlet</servlet-name>
+    <url-pattern>/ProjekcijaZaKorisnikaServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProfilKorisnikaServlet</display-name>
+    <servlet-name>ProfilKorisnikaServlet</servlet-name>
+    <servlet-class>owp.servlet.ProfilKorisnikaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProfilKorisnikaServlet</servlet-name>
+    <url-pattern>/ProfilKorisnikaServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProfilKorisnikaAdminServlet</display-name>
+    <servlet-name>ProfilKorisnikaAdminServlet</servlet-name>
+    <servlet-class>owp.servlet.ProfilKorisnikaAdminServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProfilKorisnikaAdminServlet</servlet-name>
+    <url-pattern>/ProfilKorisnikaAdminServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PojedinacnaKartaServlet</display-name>
+    <servlet-name>PojedinacnaKartaServlet</servlet-name>
+    <servlet-class>owp.servlet.PojedinacnaKartaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PojedinacnaKartaServlet</servlet-name>
+    <url-pattern>/PojedinacnaKartaServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -100,11 +100,11 @@ $(document).ready(function(){
 		for(it of projekcijeZaTabelu){
 			projekcijaTable.append(
 				'<tr>' + 
-					'<td>' + it.film + '</td>' +
+					'<td><a href="projekcijafilmzakorisnika.html?film' + it.film + '&id=' + it.id + '">' + it.film + '</td>' +
 					'<td>' + it.tipProjekcije + '</td>' +
 					'<td>' + it.sala + '</td>' +
-					'<td>' + new Date(it.datumPrikazivanja) + '</td>' +
-					'<td>' + it.vremePrikazivanja + '</td>' +
+					'<td><a href="projekcijazakorisnika.html?film' + it.film + '&id=' + it.id + '">' + new Date(it.datumPrikazivanja) + '</td>' +
+					'<td><a href="projekcijazakorisnika.html?film' + it.film + '&id=' + it.id + '">' + it.vremePrikazivanja + '</td>' +
 					'<td>' + it.cenaKarte + '</td>' +
 					'<td>' + 
 					'</td>' + 

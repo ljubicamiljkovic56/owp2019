@@ -102,7 +102,7 @@ $(document).ready(function(){
 					'<tr>' + 
 					'<td><a href="izmenikorisnika.html?korisnickoIme=' + it.korisnickoIme + '&id=' + it.id +  '">' + it.korisnickoIme + '</td>' +
 					'<td>' + new Date(it.datumReg) + '</td>' + 
-					'<td>' + it.uloga + '</td>' +
+					'<td><a href="profilkorisnikaadmin.html?korisnickoIme='+ it.korisnickoIme + '&id=' + it.id +  '">' + it.uloga + '</td>' +
 					'<td>' + 
 						'<form>' + 
 							'<input type="submit" value="Obrisi" class="deleteSubmit" korisnikID="' + it.id + '">' + 

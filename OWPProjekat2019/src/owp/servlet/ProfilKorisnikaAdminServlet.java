@@ -8,14 +8,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import owp.dao.FilmDAO;
 import owp.dao.KorisnikDAO;
-import owp.model.Film;
 import owp.model.Korisnik;
 @SuppressWarnings("serial")
-public class FilmZaKorisnikaServlet extends HttpServlet {
-
+public class ProfilKorisnikaAdminServlet extends HttpServlet {
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String logKorisnickoIme = (String) request.getSession().getAttribute("logKorisnickoIme");
 		if (logKorisnickoIme == null) {
@@ -29,7 +26,6 @@ public class FilmZaKorisnikaServlet extends HttpServlet {
 		}
 		request.getRequestDispatcher("./SuccessServlet").forward(request, response);
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String logKorisnickoIme = (String) request.getSession().getAttribute("logKorisnickoIme");
 		if (logKorisnickoIme == null) {
@@ -46,9 +42,9 @@ public class FilmZaKorisnikaServlet extends HttpServlet {
 			switch (action) {
 			case "get": {
 				int id = Integer.parseInt(request.getParameter("id"));
-				Film film1 = FilmDAO.get(id);
+				Korisnik korisnik1 = KorisnikDAO.get(id);
 				Map<String, Object> data = new LinkedHashMap<>();
-				data.put("film1", film1);
+				data.put("korisnik1", korisnik1);
 				request.setAttribute("data", data);
 				break;
 			}

@@ -124,11 +124,11 @@ $(document).ready(function(){
 		for(it of karteZaTabelu){
 			karteTable.append(
 					'<tr>' + 
-					'<td><a href="izmenikartu.html?projekcija=' + it.projekcija + '&id=' + it.id +  '">' + it.projekcija + '</td>' +
+					'<td><a href="projekcijafilmzakorisnika.html?film=' + it.film + '&id=' + it.id +  '">' + it.projekcija + '</td>' +
 					'<td>' + it.sediste + '</td>' +
-					'<td>' + new Date(it.datumProdaje) + '</td>' + 
-					'<td>' + it.vremeProdaje + '</td>' +
-					'<td>' + it.korisnik + '</td>' +
+					'<td><a href="pojedinacnakarta.html?projekcija' + it.projekcija + '&id=' + it.id + '">' + new Date(it.datumProdaje) + '</td>' + 
+					'<td><a href="pojedinacnakarta.html?projekcija' + it.projekcija + '&id=' + it.id + '">' + it.vremeProdaje + '</td>' +
+					'<td><a href="profilkorisnikaadmin.html?korisnickoIme' + it.korisnickoIme + '&id=' + it.id + '">' + it.korisnik + '</td>' +
 					'<td>' + 
 						'<form>' + 
 							'<input type="submit" value="Obrisi" class="deleteSubmit" kartaID="' + it.id + '">' + 

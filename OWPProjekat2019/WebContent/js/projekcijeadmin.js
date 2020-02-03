@@ -114,8 +114,8 @@ $(document).ready(function(){
 					'<td><a href="izmeniprojekciju.html?film=' + it.film + '&id=' + it.id +  '">' + it.film + '</td>' +
 					'<td>' + it.tipProjekcije + '</td>' +
 					'<td>' + it.sala + '</td>' +
-					'<td>' + new Date(it.datumPrikazivanja) + '</td>' +
-					'<td>' + it.vremePrikazivanja + '</td>' +
+					'<td><a href="projekcijazakorisnika.html?film' + it.film + '&id=' + it.id + '">' + new Date(it.datumPrikazivanja) + '</td>' +
+					'<td><a href="projekcijazakorisnika.html?film' + it.film + '&id=' + it.id + '">' + it.vremePrikazivanja + '</td>' +
 					'<td>' + it.cenaKarte + '</td>' +
 					'<td>' + it.admin + '</td>' +
 					'<td>' + 

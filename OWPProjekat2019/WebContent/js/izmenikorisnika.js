@@ -38,7 +38,6 @@ $(document).ready(function(){
  					$('#korisnikForm').hide();
  					$('#adminForm').hide();
  					
- 					alert('test 1');
  					
  					$('#korisnickoImeCell').text(korisnik1.korisnickoIme);
  					$('#lozinkaCell').text(korisnik1.lozinka);
@@ -50,9 +49,8 @@ $(document).ready(function(){
  					$('#korisnikForm').hide()
  					$('#adminForm').show();
  					
- 					alert('test 2');
 
- 					$('button').on('click', function(event) {
+ 					$('#updateSubmit').on('click', function(event) {
  						var id = idInput.val();
  						var korisnickoIme = korisnickoImeInput.val();
  						var lozinka = lozinkaInput.val();
@@ -64,7 +62,6 @@ $(document).ready(function(){
  						console.log('datumReg: ' + datumReg);
  						console.log('uloga: ' + uloga);
 
- 						alert('test 3');
  						
  						params = {
  							'action': 'update',
@@ -97,5 +94,4 @@ $(document).ready(function(){
  	}
  	
  	getKorisnik();
- 	alert('test 4');
 });
