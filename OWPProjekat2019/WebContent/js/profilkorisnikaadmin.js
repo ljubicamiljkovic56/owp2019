@@ -39,7 +39,7 @@ $(document).ready(function(){
  				$('#idCell').val(korisnik1.id);
  				$('#korisnickoImeCell').val(korisnik1.korisnickoIme);
  				$('#lozinkaCell').val(korisnik1.lozinka);
- 				$('#datumRegCell').val(korisnik1.datumReg);
+ 				$('#datumRegCell').val(new Date(korisnik1.datumReg));
  				$('#ulogaCell').val(korisnik1.uloga);
  			}
  		});

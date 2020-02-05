@@ -43,7 +43,7 @@ $(document).ready(function(){
  				$('#filmCell').val(projekcija1.film);
  				$('#tipProjekcijeCell').val(projekcija1.tipProjekcije);
  				$('#salaCell').val(projekcija1.sala);
- 				$('#datumPrikazivanjaCell').val(projekcija1.datumPrikazivanja);
+ 				$('#datumPrikazivanjaCell').val(new Date(projekcija1.datumPrikazivanja));
  				$('#vremePrikazivanjaCell').val(projekcija1.vremePrikazivanja);
  				$('#cenaKarteCell').val(projekcija1.cenaKarte);
  			}

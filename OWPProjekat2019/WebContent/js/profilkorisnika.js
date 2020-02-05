@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	var urlParams = new URLSearchParams(window.location.search);
-	$('#idCell').val(urlParams.get('id'));
+	//$('#idCell').val(urlParams.get('id'));
 	$('#logoutLink').on('click', function(event){
 		$.get('LogoutServlet', function(data){
 			console.log(data);
@@ -35,9 +35,10 @@ $(document).ready(function(){
  				console.log('ispis...');
  				$('#korisnikForm').show();	
  					
+ 				$('#idCell').val(korisnik1.id);
  				$('#korisnickoImeCell').val(korisnik1.korisnickoIme);
  				$('#lozinkaCell').val(korisnik1.lozinka);
- 				$('#datumRegCell').val(korisnik1.datumReg);
+ 				$('#datumRegCell').val(new Date(korisnik1.datumReg));
  				$('#ulogaCell').val(korisnik1.uloga);
  
 

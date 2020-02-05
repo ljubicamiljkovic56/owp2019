@@ -8,10 +8,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import owp.dao.KartaDAO;
 import owp.dao.KorisnikDAO;
+import owp.model.Karta;
 import owp.model.Korisnik;
 @SuppressWarnings("serial")
-public class ProfilKorisnikaServlet extends HttpServlet {
+public class KorisnikovaKartaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String logKorisnickoIme = (String) request.getSession().getAttribute("logKorisnickoIme");
 		if (logKorisnickoIme == null) {
@@ -41,13 +44,15 @@ public class ProfilKorisnikaServlet extends HttpServlet {
 			String action = request.getParameter("action");
 			switch (action) {
 			case "get": {
-				//int id = Integer.parseInt(request.getParameter("id"));
-				//Korisnik korisnik1 = KorisnikDAO.get(id);
-				Korisnik korisnik1 = KorisnikDAO.get(ulogovanKorisnik.getKorisnickoIme());
-				Map<String, Object> data = new LinkedHashMap<>();
-				data.put("korisnik1", korisnik1);
-				request.setAttribute("data", data);
-				break;
+				int id = Integer.parseInt(request.getParameter("id"));
+				Karta karta1 = KartaDAO.get(id);
+				if(ulogovanKorisnik.getKorisnickoIme() == karta1.getKorisnik()) {
+					Map<String, Object> data = new LinkedHashMap<>();
+					data.put("karta1", karta1);
+					request.setAttribute("data", data);
+					break;
+				}
+				
 			}
 		}
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);

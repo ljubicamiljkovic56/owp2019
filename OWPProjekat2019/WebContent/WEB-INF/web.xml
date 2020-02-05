@@ -209,4 +209,14 @@
     <servlet-name>PojedinacnaKartaServlet</servlet-name>
     <url-pattern>/PojedinacnaKartaServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>KorisnikovaKartaServlet</display-name>
+    <servlet-name>KorisnikovaKartaServlet</servlet-name>
+    <servlet-class>owp.servlet.KorisnikovaKartaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>KorisnikovaKartaServlet</servlet-name>
+    <url-pattern>/KorisnikovaKartaServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
