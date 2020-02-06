@@ -2,6 +2,7 @@ package owp.servlet;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -44,14 +45,11 @@ public class KorisnikovaKartaServlet extends HttpServlet {
 			String action = request.getParameter("action");
 			switch (action) {
 			case "get": {
-				int id = Integer.parseInt(request.getParameter("id"));
-				Karta karta1 = KartaDAO.get(id);
-				if(ulogovanKorisnik.getKorisnickoIme() == karta1.getKorisnik()) {
-					Map<String, Object> data = new LinkedHashMap<>();
-					data.put("karta1", karta1);
-					request.setAttribute("data", data);
-					break;
-				}
+				List<Karta> karta1 = KartaDAO.getKorisnikovaKarta(ulogovanKorisnik.getKorisnickoIme());
+				Map<String, Object> data = new LinkedHashMap<>();
+				data.put("karta1", karta1);
+				request.setAttribute("data", data);
+				break;
 				
 			}
 		}

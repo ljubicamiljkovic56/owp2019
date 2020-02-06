@@ -51,6 +51,42 @@ public class KorisnikDAO {
 		return null;
 	}
 	
+	//u ProfilKorisnikaServlet se poziva da bismo dobili korisnika
+	public static Korisnik getKorisnickoIme(String korisnickoIme) {
+		Connection conn = ConnectionManager.getConnection();
+		Korisnik korisnik = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		try {
+			String query = "SELECT id, lozinka, datumReg, uloga FROM korisnik WHERE korisnickoIme = ? ";
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, korisnickoIme);
+			System.out.println(pstmt);
+
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				int index = 1;
+				int id = rset.getInt(index++);
+				String korisnickoIme1 = rset.getString(index++);
+				String lozinka = rset.getString("lozinka");
+				Date datumReg = rset.getDate("datumReg");
+				Uloga uloga = Uloga.valueOf(rset.getString("uloga"));
+				
+				korisnik = new Korisnik(id, korisnickoIme1, lozinka, datumReg, uloga);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		}
+		return korisnik;
+	}
+	
 	//get id u servletu se koristi pre update-a
 	public static Korisnik get(int id) {
 		Connection conn = ConnectionManager.getConnection();
@@ -72,7 +108,6 @@ public class KorisnikDAO {
 				Date datumReg = rset.getDate(3);
 				Uloga uloga = Uloga.valueOf(rset.getString(4));
 				
-
 				korisnik =  new Korisnik(id,korisnickoIme,lozinka,datumReg,uloga);
 			}
 		} catch (Exception ex) {

@@ -50,6 +50,49 @@ public class KartaDAO {
 		return karta;
 	}
 	
+	public static List<Karta> getKorisnikovaKarta(String korisnik) {
+		Connection conn = ConnectionManager.getConnection();
+		List<Karta> karta1 = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT id, projekcija, sediste, datumProdaje, vremeProdaje FROM karta WHERE korisnik = ? ";
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, korisnik);
+			System.out.println(pstmt);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				//int index = 1;
+				int id = rset.getInt("id");
+				String projekcija = rset.getString("projekcija");
+				int sediste = rset.getInt("sediste");
+				Date datumProdaje = rset.getDate("datumProdaje");
+				String vremeProdaje = rset.getString("vremeProdaje");
+				
+				Karta karta = new Karta(id, projekcija, sediste, datumProdaje, vremeProdaje, korisnik);
+				karta.setId(id);
+				karta.setProjekcija(projekcija);
+				karta.setSediste(sediste);
+				karta.setDatumProdaje(datumProdaje);
+				karta.setVremeProdaje(vremeProdaje);
+				karta.setKorisnik(korisnik);
+				karta1.add(karta);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		}
+		
+		return karta1;
+	}
+	
+	
 	//pregled karata
 	public static List<Karta> getAll() {
 		List<Karta> karte = new ArrayList<>();

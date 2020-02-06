@@ -1,4 +1,4 @@
-var karte = []
+var karta = []
 var sortProjekcijaSmer = 1;
 var sortSedisteSmer = 1;
 var sortDatumProdajeSmer = 1;
@@ -18,35 +18,11 @@ $(document).ready(function(){
 		return false;
 	});
 	
-	var filterProjekcijaInput = $('#filterProjekcijaInput');
-	var filterSedisteInput = $('#filterSedisteInput');
-	var filterDatumProdajeInput = $('#filterDatumProdajeInput');
-	var filterVremeProdajeInput = $('#filterVremeProdajeInput');
-	var filterKorisnikInput = $('#filterKorisnikInput');
 	
-	var karteTable = $('#karteTable');
+	var kartaTable = $('#kartaTable');
 
-	function getKarte(){
-		var filterProjekcija = filterProjekcijaInput.val();
-		var filterSediste = filterSedisteInput.val();
-		var filterDatumProdaje = filterDatumProdajeInput.val();
-		var filterVremeProdaje = filterVremeProdajeInput.val();
-		var filterKorisnik = filterKorisnikInput.val();
-		console.log('filterProjekcija: ' + filterProjekcija);
-		console.log('filterSediste:' + filterSediste);
-		console.log('filterDatumProdaje: ' + filterDatumProdaje);
-		console.log('filterVremeProdaje: ' + filterVremeProdaje);
-		console.log('filterKorisnik: ' + filterKorisnik);
-
-		var params = {
-			'filterProjekcija ' : filterProjekcija,
-			'filterSedsite': filterSediste,
-			'filterDatumProdaje ' : filterDatumProdaje,
-			'filterVremeProdaje' : filterVremeProdaje,
-			'filterKorisnik ' : filterKorisnik
-
-		};
-		$.get('KartaServlet', params, function(data){
+	function getKarta(){
+		$.post('KorisnikovaKartaServlet', {'action': 'get'},  function(data){
 			console.log(data);
 			
 			if (data.status == 'unauthenticated') {
@@ -54,86 +30,27 @@ $(document).ready(function(){
 				return;
 			}
 			if(data.status == 'success') {
-				karte = data.filterKarte;
+				karta = data.karta1;
 				
-				popuniTabelu(karte);
+				popuniTabelu(karta);
+				
+				console.log(karta);
+				console.log('ispis...');
 			}	
 		});
 	};
-	filterProjekcijaInput.on('keyup', function(event){
-		getKarte();
-		
-		event.preventDefault();
-		return false;
-	});
-	filterSedisteInput.on('keyup', function(event){
-		getKarte();
-		
-		event.preventDefault();
-		return false;
-	});
-	filterDatumProdajeInput.on('keyup', function(event){
-		getKarte();
-		
-		event.preventDefault();
-		return false;
-	});
-	filterVremeProdajeInput.on('keyup', function(event){
-		getKarte();
-		
-		event.preventDefault();
-		return false;
-	});
-	
-	filterKorisnikInput.on('keyup', function(event){
-		getKarte();
-		
-		event.preventDefault();
-		return false;
-	});
-	
-	karteTable.on('click', 'input.deleteSubmit', function(event){
-		alert('Brisem...');
-		var kartaID = $(this).attr('kartaID');
-		console.log('kartaID: ' + kartaID);
-		
-		params = {
-				'action': 'delete',
-				'id': kartaID	
-		};
-		console.log(params);
-		$.post('KartaServlet', params, function(data){
-			if (data.status == 'unauthenticated') {
-				window.location.replace('login.html');
-				return;
-			}
-
-			if (data.status == 'success') {
-				window.location.replace('karte.html');
-				return;
-			}
-		});
-		event.preventDefault();
-		return false;
-	});
-	
 	function popuniTabelu(karteZaTabelu){
-		karteTable.find('tr:gt(1)').remove();
+		kartaTable.find('tr:gt(1)').remove();
 
 		console.log(karteZaTabelu);
 		for(it of karteZaTabelu){
-			karteTable.append(
+			kartaTable.append(
 					'<tr>' + 
-					'<td><a href="projekcijafilmzakorisnika.html?film=' + it.film + '&id=' + it.id +  '">' + it.projekcija + '</td>' +
+					'<td>' + it.projekcija + '</td>' +
 					'<td>' + it.sediste + '</td>' +
-					'<td><a href="pojedinacnakarta.html?projekcija' + it.projekcija + '&id=' + it.id + '">' + new Date(it.datumProdaje) + '</td>' + 
-					'<td><a href="pojedinacnakarta.html?projekcija' + it.projekcija + '&id=' + it.id + '">' + it.vremeProdaje + '</td>' +
-					'<td><a href="profilkorisnikaadmin.html?korisnickoIme' + it.korisnickoIme + '&id=' + it.id + '">' + it.korisnik + '</td>' +
-					'<td>' + 
-						'<form>' + 
-							'<input type="submit" value="Obrisi" class="deleteSubmit" kartaID="' + it.id + '">' + 
-						'</form>' +
-					'</td>' + 
+					'<td><a href="pojedinacnakartakorisnik.html?projekcija' + it.projekcija + '&id=' + it.id + '">' + new Date(it.datumProdaje) + '</td>' + 
+					'<td><a href="pojedinacnakartakorisnik.html?projekcija' + it.projekcija + '&id=' + it.id + '">' + it.vremeProdaje + '</td>' +
+					'<td><a href="profilkorisnika.html?korisnickoIme' + it.korisnickoIme + '&id=' + it.id + '">' + it.korisnik + '</td>' +
 				'</tr>'	
 			)
 		}
@@ -257,5 +174,5 @@ $(document).ready(function(){
 		popuniTabelu(sortiraneKarte);
 	};
 	
-	getKarte();
+	getKarta();
 });
