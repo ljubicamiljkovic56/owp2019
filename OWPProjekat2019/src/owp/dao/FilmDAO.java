@@ -54,6 +54,7 @@ public class FilmDAO {
 		return film;
 	}
 	
+	//pregled filmova bez filtera
 	public static List<Film> getAll(){
 		List<Film> filmovi = new ArrayList<>();
 		
@@ -105,9 +106,9 @@ public class FilmDAO {
 		
 	}
 
-	
-	public static List<Film> getAllIndex(String naziv, String zanrovi, int trajanje, String distributer, 
-			String zemljaPorekla, int godinaProizvodnje, String opis){
+	//pregled filmova sa filterima
+	public static List<Film> getAllIndex(String naziv,String reziser, String glumci, String zanrovi, int trajanjeV, int trajanjeN, String distributer, 
+			String zemljaPorekla, int godinaProizvodnjeV, int godinaProizvodnjeN, String opis){
 		
 		List<Film> filmovi = new ArrayList<>();
 		
@@ -117,13 +118,20 @@ public class FilmDAO {
 		ResultSet rset = null;
 		try {
 			String query = "SELECT * FROM film WHERE "
-					+ "naziv LIKE ? AND zanrovi LIKE ? AND distributer LIKE ? AND zemljaPorekla LIKE ? ";
-			
-			if (trajanje > 0) {
-				query += " AND trajanje = ?";
+					+ "naziv LIKE ? AND reziser LIKE ? AND glumci LIKE ? AND zanrovi LIKE ?"
+					+ " AND distributer LIKE ? AND zemljaPorekla LIKE ? AND opis LIKE ? ";
+	
+			if (trajanjeV > 0) {
+				query += " AND trajanje >= ?";
 			}
-			if (godinaProizvodnje > 0) {
-				query += " AND godinaProizvodnje = ?";
+			if (trajanjeN > 0) {
+				query += " AND trajanje <= ?";
+			}
+			if (godinaProizvodnjeV > 0) {
+				query += " AND godinaProizvodnje >= ?";
+			}
+			if (godinaProizvodnjeN > 0) {
+				query += " AND godinaProizvodnje <= ?";
 			}
 			
 			// gore mora biti like
@@ -133,14 +141,24 @@ public class FilmDAO {
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
 			pstmt.setString(index++, "%" + naziv + "%");
-			pstmt.setString(index++, "%" + zanrovi + "%");
-			pstmt.setString(index++, "%" + distributer + "%");
-			pstmt.setString(index++, zemljaPorekla);
-			if (trajanje > 0) {
-				pstmt.setInt(index++, trajanje);
+			pstmt.setString(index++, reziser + "%");
+			pstmt.setString(index++, glumci + "%");
+			pstmt.setString(index++, zanrovi + "%");
+			pstmt.setString(index++, distributer + "%");
+			pstmt.setString(index++, zemljaPorekla + "%");
+			pstmt.setString(index++, opis + "%");
+			if (trajanjeV > 0) {
+				pstmt.setInt(index++, trajanjeV);
 			}
-			if (godinaProizvodnje > 0) {
-				pstmt.setInt(index++, godinaProizvodnje);
+			if (trajanjeN > 0) {
+				pstmt.setInt(index++, trajanjeN);
+			}
+			if (godinaProizvodnjeV > 0) {
+				pstmt.setInt(index++, godinaProizvodnjeV);
+			}
+			
+			if (godinaProizvodnjeN > 0) {
+				pstmt.setInt(index++, godinaProizvodnjeN);
 			}
 			
 			System.out.println(pstmt);
@@ -156,8 +174,8 @@ public class FilmDAO {
 			while(rset.next()) {
 				int id = rset.getInt("id");
 				String filmNaziv = rset.getString("naziv");
-				String reziser = rset.getString("reziser");
-				String glumci = rset.getString("glumci");
+				String reziser1 = rset.getString("reziser");
+				String glumci1 = rset.getString("glumci");
 				String filmZanrovi = rset.getString("zanrovi");
 				int filmTrajanje = rset.getInt("trajanje");
 				String filmDistributer = rset.getString("distributer");
@@ -165,11 +183,11 @@ public class FilmDAO {
 				int filmGodinaProizvodnje = rset.getInt("godinaProizvodnje");
 				String filmOpis = rset.getString("opis");
 				
-				Film film = new Film(id,filmNaziv,reziser,glumci,filmZanrovi,filmTrajanje,filmDistributer,filmZemljaPorekla,filmGodinaProizvodnje,filmOpis);
+				Film film = new Film(id,filmNaziv,reziser1,glumci1,filmZanrovi,filmTrajanje,filmDistributer,filmZemljaPorekla,filmGodinaProizvodnje,filmOpis);
 				film.setId(id);
 				film.setNaziv(filmNaziv);
-				film.setReziser(reziser);
-				film.setGlumci(glumci);
+				film.setReziser(reziser1);
+				film.setGlumci(glumci1);
 				film.setZanrovi(filmZanrovi);
 				film.setTrajanje(filmTrajanje);
 				film.setDistributer(filmDistributer);

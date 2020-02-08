@@ -25,28 +25,40 @@ public class IndexServlet extends HttpServlet {
 		glumci = (glumci != null? glumci: "");
 		String zanrovi = request.getParameter("filterZanrovi");
 		zanrovi = (zanrovi != null? zanrovi: "");
-		int trajanje = 0;
+		int trajanjeV = 0;
 		try {
-			String filterTrajanjeString = request.getParameter("filterTrajanje");
-			trajanje = Integer.parseInt(filterTrajanjeString);
-			trajanje = (trajanje > 0? trajanje: 0);
-		}catch (Exception ex){}
+			String filterTrajanjeVString = request.getParameter("filterTrajanjeV");
+			trajanjeV = Integer.parseInt(filterTrajanjeVString);
+			trajanjeV = (trajanjeV > 0? trajanjeV: 0);
+		}catch (Exception ex){ ex.printStackTrace();}
+		int trajanjeN = 0;
+		try {
+			String filterTrajanjeNString = request.getParameter("filterTrajanjeN");
+			trajanjeN = Integer.parseInt(filterTrajanjeNString);
+			trajanjeN = (trajanjeN > 0? trajanjeN: 0);
+		}catch (Exception ex){ ex.printStackTrace();}
 		String distributer = request.getParameter("filterDistributer");
 		distributer = (distributer != null? distributer: "");
 		String zemljaPorekla = request.getParameter("filterZemljaPorekla");
 		zemljaPorekla = (zemljaPorekla != null? zemljaPorekla: "");
-		int godinaProizvodnje = 0;
+		int godinaProizvodnjeV = 0;
 		try {
-			String filterGodinaProizvodnjeString = request.getParameter("filterGodinaProizvodnje");
-			godinaProizvodnje = Integer.parseInt(filterGodinaProizvodnjeString);
-			godinaProizvodnje = (godinaProizvodnje > 0? godinaProizvodnje: 0);
-		}catch (Exception ex){}
-		godinaProizvodnje = (godinaProizvodnje > 0? godinaProizvodnje: 0);
+			String filterGodinaProizvodnjeVString = request.getParameter("filterGodinaProizvodnjeV");
+			godinaProizvodnjeV = Integer.parseInt(filterGodinaProizvodnjeVString);
+			godinaProizvodnjeV = (godinaProizvodnjeV > 0? godinaProizvodnjeV: 0);
+		}catch (Exception ex){ }
+		int godinaProizvodnjeN = 0;
+		try {
+			String filterGodinaProizvodnjeNString = request.getParameter("filterGodinaProizvodnjeN");
+			godinaProizvodnjeN = Integer.parseInt(filterGodinaProizvodnjeNString);
+			godinaProizvodnjeN = (godinaProizvodnjeN > 0? godinaProizvodnjeN: 0);
+		}catch (Exception ex){ }
 		String opis = request.getParameter("filterOpis");
 		opis = (opis != null? opis: "");
 	
 
-		List<Film> filterFilmovi = FilmDAO.getAll();
+		//List<Film> filterFilmovi = FilmDAO.getAll();
+		List<Film> filterFilmovi = FilmDAO.getAllIndex(naziv, reziser, glumci, zanrovi, trajanjeV, trajanjeN, distributer, zemljaPorekla, godinaProizvodnjeV, godinaProizvodnjeN, opis);
 
 		Map<String, Object> data = new LinkedHashMap<>();
 		data.put("filterFilmovi", filterFilmovi);

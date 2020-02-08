@@ -11,8 +11,11 @@ $(document).ready(function(){
 	var filterTipProjekcijeInput = $('#filterTipProjekcijeInput');
 	var filterSalaInput = $('#filterSalaInput');
 	var filterDatumPrikazivanjaInput = $('#filterDatumPrikazivanjaInput');
+//	var filterDatumPrikazivanjaNInput = $('#filterDatumPrikazivanjaNInput');
 	var filterVremePrikazivanjaInput = $('#filterVremePrikazivanjaInput');
-	var filterCenaKarteInput = $('#filterCenaKarteInput');
+//	var filterVremePrikazivanjaNInput = $('#filterVremePrikazivanjaNInput');
+	var filterCenaKarteVInput = $('#filterCenaKarteVInput');
+	var filterCenaKarteNInput = $('#filterCenaKarteNInput');
 
 
 	var projekcijaTable = $('#projekcijaTable');
@@ -22,22 +25,31 @@ $(document).ready(function(){
 		var filterTipProjekcije = filterTipProjekcijeInput.val();
 		var filterSala = filterSalaInput.val();
 		var filterDatumPrikazivanja = filterDatumPrikazivanjaInput.val();
+		//var filterDatumPrikazivanjaN = filterDatumPrikazivanjaNInput.val();
 		var filterVremePrikazivanja = filterVremePrikazivanjaInput.val();
-		var filterCenaKarte = filterCenaKarteInput.val();
+		//var filterVremePrikazivanjaN = filterVremePrikazivanjaNInput.val();
+		var filterCenaKarteV = filterCenaKarteVInput.val();
+		var filterCenaKarteN = filterCenaKarteNInput.val();
 		console.log('filterFilm: ' + filterFilm);
 		console.log('filterTipProjekcije: ' + filterTipProjekcije);
 		console.log('filterSala: ' + filterSala);
 		console.log('filterDatumPrikazivanja: ' + filterDatumPrikazivanja);
+	//	console.log('filterDatumPrikazivanjaN: ' + filterDatumPrikazivanjaN);
 		console.log('filterVremePrikazivanja: ' + filterVremePrikazivanja);
-		console.log('filterCenaKarte: ' + filterCenaKarte);
+		//console.log('filterVremePrikazivanjaN: ' + filterVremePrikazivanjaN);
+		console.log('filterCenaKarteV: ' + filterCenaKarteV);
+		console.log('filterCenaKarteN: ' + filterCenaKarteN);
 		
 		var params = {
 			'filterFilm': filterFilm,
 			'filterTipProjekcije': filterTipProjekcije,
 			'filterSala': filterSala,
 			'filterDatumPrikazivanja': filterDatumPrikazivanja,
+			//'filterDatumPrikazivanjaN': filterDatumPrikazivanjaN,
 			'filterVremePrikazivanja': filterVremePrikazivanja,
-		    'filterCenaKarte': filterCenaKarte
+			//'filterVremePrikazivanjaN': filterVremePrikazivanjaN,
+		    'filterCenaKarteV': filterCenaKarteV,
+		    'filterCenaKarteN': filterCenaKarteN
 
 		};
 		
@@ -77,14 +89,33 @@ $(document).ready(function(){
 		event.preventDefault();
 		return false;
 	});
+//	filterDatumPrikazivanjaNInput.on('keyup', function(event){
+//		getProjekcije();
+//		
+//		event.preventDefault();
+//		return false;
+//	});
 	filterVremePrikazivanjaInput.on('keyup', function(event){
 		getProjekcije();
 		
 		event.preventDefault();
 		return false;
 	});
+//	filterVremePrikazivanjaNInput.on('keyup', function(event){
+//		getProjekcije();
+//		
+//		event.preventDefault();
+//		return false;
+//	});
 
-	filterCenaKarteInput.on('keyup', function(event){
+	filterCenaKarteVInput.on('keyup', function(event){
+		getProjekcije();
+		
+		event.preventDefault();
+		return false;
+	});
+	
+	filterCenaKarteNInput.on('keyup', function(event){
 		getProjekcije();
 		
 		event.preventDefault();

@@ -14,10 +14,12 @@ $(document).ready(function(){
 	var filterReziserInput = $('#filterReziserInput');
 	var filterGlumciInput = $('#filterGlumciInput');
 	var filterZanroviInput = $('#filterZanroviInput');
-	var filterTrajanjeInput = $('#filterTrajanjeInput');
+	var filterTrajanjeVInput = $('#filterTrajanjeVInput');
+	var filterTrajanjeNInput = $('#filterTrajanjeNInput');
 	var filterDistributerInput = $('#filterDistributerInput');
 	var filterZemljaPoreklaInput = $('#filterZemljaPoreklaInput');
-	var filterGodinaProizvodnjeInput = $('#filterGodinaProizvodnjeInput');
+	var filterGodinaProizvodnjeVInput = $('#filterGodinaProizvodnjeVInput');
+	var filterGodinaProizvodnjeNInput = $('#filterGodinaProizvodnjeNInput');
 	var filterOpisInput = $('#filterOpisInput');
 
 	var filmTable = $('#filmTable');
@@ -29,19 +31,23 @@ $(document).ready(function(){
 		var filterReziser = filterReziserInput.val();
 		var filterGlumci = filterGlumciInput.val();
 		var filterZanrovi = filterZanroviInput.val();
-		var filterTrajanje = filterTrajanjeInput.val();
+		var filterTrajanjeV = filterTrajanjeVInput.val();
+		var filterTrajanjeN = filterTrajanjeNInput.val();
 		var filterDistributer = filterDistributerInput.val();
 		var filterZemljaPorekla = filterZemljaPoreklaInput.val();
-		var filterGodinaProizvodnje = filterGodinaProizvodnjeInput.val();
+		var filterGodinaProizvodnjeV = filterGodinaProizvodnjeVInput.val();
+		var filterGodinaProizvodnjeN = filterGodinaProizvodnjeNInput.val();
 		var filterOpis = filterOpisInput.val();
 		console.log('filterNaziv: ' + filterNaziv);
 		console.log('filterReziser: ' + filterReziser);
 		console.log('filterGlumci: ' + filterGlumci)
 		console.log('filterZanrovi: ' + filterZanrovi);
-		console.log('filterTrajanje: ' + filterTrajanje);
+		console.log('filterTrajanjeV: ' + filterTrajanjeV);
+		console.log('filterTrajanjeN: ' + filterTrajanjeN);
 		console.log('filterDistributer: ' + filterDistributer);
 		console.log('filterZemljaPorekla: ' + filterZemljaPorekla);
-		console.log('filterGodinaProizvodnje: ' + filterGodinaProizvodnje);
+		console.log('filterGodinaProizvodnjeV: ' + filterGodinaProizvodnjeV);
+		console.log('filterGodinaProizvodnjeN: ' + filterGodinaProizvodnjeN);
 		console.log('filterOpis: ' + filterOpis);
 		
 		var params = {
@@ -49,10 +55,12 @@ $(document).ready(function(){
 			'filterReziser': filterReziser,
 			'filterGlumci': filterGlumci,
 			'filterZanrovi': filterZanrovi,
-			'filterTrajanje': filterTrajanje,
+			'filterTrajanjeV': filterTrajanjeV,
+			'filterTrajanjeN': filterTrajanjeN,
 			'filterDistributer': filterDistributer,
 			'filterZemljaPorekla': filterZemljaPorekla,
-		    'filterGodinaProizvodnje': filterGodinaProizvodnje,
+		    'filterGodinaProizvodnjeV': filterGodinaProizvodnjeV,
+		    'filterGodinaProizvodnjeN': filterGodinaProizvodnjeN,
 			'filterOpis': filterOpis
 		};
 		
@@ -123,7 +131,13 @@ $(document).ready(function(){
 		event.preventDefault();
 		return false;
 	});
-	filterTrajanjeInput.on('keyup', function(event){
+	filterTrajanjeVInput.on('keyup', function(event){
+		getFilmovi();
+		
+		event.preventDefault();
+		return false;
+	});
+	filterTrajanjeNInput.on('keyup', function(event){
 		getFilmovi();
 		
 		event.preventDefault();
@@ -141,7 +155,13 @@ $(document).ready(function(){
 		event.preventDefault();
 		return false;
 	});
-	filterGodinaProizvodnjeInput.on('keyup', function(event){
+	filterGodinaProizvodnjeVInput.on('keyup', function(event){
+		getFilmovi();
+		
+		event.preventDefault();
+		return false;
+	});
+	filterGodinaProizvodnjeNInput.on('keyup', function(event){
 		getFilmovi();
 		
 		event.preventDefault();

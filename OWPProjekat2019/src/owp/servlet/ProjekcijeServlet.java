@@ -1,6 +1,9 @@
 package owp.servlet;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,34 +19,49 @@ import owp.model.Projekcija;
 public class ProjekcijeServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		String naziv = request.getParameter("filterNaziv");
-//		naziv = (naziv != null? naziv: "");
-//		String reziser = request.getParameter("filterReziser");
-//		String glumci = request.getParameter("filterGlumci");
-//		String zanrovi = request.getParameter("filterZanrovi");
-//		zanrovi = (zanrovi != null? zanrovi: "");
-//		int trajanje = 0;
-//		try {
-//			String filterTrajanjeString = request.getParameter("filterTrajanje");
-//			trajanje = Integer.parseInt(filterTrajanjeString);
-//			trajanje = (trajanje > 0? trajanje: 0);
-//		}catch (Exception ex){}
-//		String distributer = request.getParameter("filterDistributer");
-//		distributer = (distributer != null? distributer: "");
-//		String zemljaPorekla = request.getParameter("filterZemljaPorekla");
-//		zemljaPorekla = (zemljaPorekla != null? zemljaPorekla: "");
-//		int godinaProizvodnje = 0;
-//		try {
-//			String filterGodinaProizvodnjeString = request.getParameter("filterGodinaProizvodnje");
-//			godinaProizvodnje = Integer.parseInt(filterGodinaProizvodnjeString);
-//			godinaProizvodnje = (godinaProizvodnje > 0? godinaProizvodnje: 0);
-//		}catch (Exception ex){}
-//		godinaProizvodnje = (godinaProizvodnje > 0? godinaProizvodnje: 0);
-//		String opis = request.getParameter("filterOpis");
-//		opis = (opis != null? opis: "");
-	
+		String film = request.getParameter("filterFilm");
+		film = (film != null? film: "");
+		String tipProjekcije = request.getParameter("filterTipProjekcije");
+		tipProjekcije = (tipProjekcije != null? tipProjekcije: "");
+		String sala = request.getParameter("filterSala");
+		sala = (sala != null? sala: "");
+		
+		String stringDatumPrikazivanja = "2020-01-22";
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date;
+		try {
+			date =  dateFormat.parse(stringDatumPrikazivanja);
+			System.out.println(date);
+			java.sql.Date sqlDate = java.sql.Date.valueOf(stringDatumPrikazivanja);
+			System.out.println(sqlDate);
+		}catch (ParseException pex) {
+			pex.printStackTrace();
+		}
+		
+		String datumPrikazivanja = request.getParameter("filterDatumPrikazivanja");
+	//	String datumPrikazivanjaN = request.getParameter("filterDatumPrikazivanjaN");
+		String vremePrikazivanja = request.getParameter("filterVremePrikazivanja");
+		vremePrikazivanja = (vremePrikazivanja != null? vremePrikazivanja: "");
+		//String vremePrikazivanjaN = request.getParameter("filterVremePrikazivanjaN");
+		//vremePrikazivanjaN = (vremePrikazivanjaN != null? vremePrikazivanjaN: "");
+		double cenaKarteV = 0.0;
+		try {
+			String filterCenaKarteVString = request.getParameter("filterCenaKarteV");
+			cenaKarteV = Double.parseDouble(filterCenaKarteVString);
+			cenaKarteV = (cenaKarteV >= 0.0? cenaKarteV: 0.0);
+		}catch (Exception e) {}
+		double cenaKarteN = Double.MAX_VALUE;
+		try {
+			String filterCenaKarteNString = request.getParameter("filterCenaKarteN");
+			cenaKarteN = Double.parseDouble(filterCenaKarteNString);
+			cenaKarteN = (cenaKarteN >= 0.0? cenaKarteN: 0.0);
+		}catch (Exception e) {}
+		String admin = request.getParameter("filterAdmin");
+		admin = (admin != null? admin: "");
 
-		List<Projekcija> filterProjekcije = ProjekcijaDAO.getAll();
+		//List<Projekcija> filterProjekcije = ProjekcijaDAO.getAll();
+		
+		List<Projekcija> filterProjekcije = ProjekcijaDAO.getAllProjekcija(film, tipProjekcije, sala, datumPrikazivanja, vremePrikazivanja, cenaKarteV, cenaKarteN, admin);
 
 		Map<String, Object> data = new LinkedHashMap<>();
 		data.put("filterProjekcije", filterProjekcije);

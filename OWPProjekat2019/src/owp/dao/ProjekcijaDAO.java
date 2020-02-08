@@ -105,6 +105,85 @@ public class ProjekcijaDAO {
 		return projekcije;
 	}
 	
+	//prikaz svih projekcija i kod korisnika i kod admina sa filterom
+	public static List<Projekcija> getAllProjekcija(String film, String tipProjekcije, String sala, String datumPrikazivanja,
+			 String vremePrikazivanja,  double cenaKarteV, double cenaKarteN, String admin){
+		
+		List<Projekcija> projekcije = new ArrayList<>();
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM projekcija WHERE film LIKE ? AND tipProjekcije LIKE ? AND sala LIKE ? "
+					+ "AND datumPrikazivanja LIKE ? AND vremePrikazivanja LIKE ? AND cenaKarte >= ? AND cenaKarte <= ? AND admin LIKE ?";
+			
+					
+//		if (!datumPrikazivanja.equals("")) {
+//			query += " AND datumPrikazivanja LIKE ?";
+//		}
+		
+		pstmt = conn.prepareStatement(query);
+		int index = 1;
+		pstmt.setString(index++, "%" + film + "%");
+		pstmt.setString(index++, tipProjekcije + "%");
+		pstmt.setString(index++, sala + "%");
+		pstmt.setString(index++, datumPrikazivanja + "%");
+		pstmt.setString(index++, vremePrikazivanja + "%");
+		pstmt.setDouble(index++, cenaKarteV);
+		pstmt.setDouble(index++, cenaKarteN);
+		pstmt.setString(index++, admin + "%");
+//		
+//		if (!datumPrikazivanja.equals("")) {
+//			pstmt.setString(index++, datumPrikazivanja + "%");
+//		}
+//		
+		System.out.println(pstmt);
+		System.out.println(pstmt + " evo statementa");
+
+		rset = pstmt.executeQuery();
+		
+		System.out.println(pstmt.executeQuery() + "  jel ovo execute query");
+
+		System.out.println("nakon execute query");
+		System.out.println(query);
+		
+		while(rset.next()) {
+			int id = rset.getInt("id");
+			String filmP = rset.getString("film");
+			String tipProjekcijeP = rset.getString("tipProjekcije");
+			String salaP = rset.getString("sala");
+			Date datumPrikazivanjaP = rset.getDate("datumPrikazivanja");
+			String vremePrikazivanjaP = rset.getString("vremePrikazivanja");
+			Double cenaKarteP = rset.getDouble("cenaKarte");
+			String adminP = rset.getString("admin");
+			
+			Projekcija projekcija = new Projekcija(id,filmP, tipProjekcijeP, salaP, datumPrikazivanjaP, vremePrikazivanjaP, cenaKarteP, adminP);
+			projekcija.setId(id);
+			projekcija.setFilm(filmP);
+			projekcija.setTipProjekcije(tipProjekcijeP);
+			projekcija.setSala(salaP);
+			projekcija.setDatumPrikazivanja(datumPrikazivanjaP);
+			projekcija.setVremePrikazivanja(vremePrikazivanjaP);
+			projekcija.setCenaKarte(cenaKarteP);
+			projekcija.setAdmin(adminP);
+			projekcije.add(projekcija);	
+
+
+			}
+			System.out.println("zasto nema ispisa?");
+					
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		}
+		
+		return projekcije;
+		
+	}
+	
 	//poslednji dodati id u bazi
 	protected static int getInsertedId(Connection conn) throws SQLException {
 		String query = "SELECT last_insert_rowid();";

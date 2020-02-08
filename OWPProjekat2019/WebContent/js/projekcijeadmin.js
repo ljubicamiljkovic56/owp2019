@@ -13,7 +13,8 @@ $(document).ready(function(){
 	var filterSalaInput = $('#filterSalaInput');
 	var filterDatumPrikazivanjaInput = $('#filterDatumPrikazivanjaInput');
 	var filterVremePrikazivanjaInput = $('#filterVremePrikazivanjaInput');
-	var filterCenaKarteInput = $('#filterCenaKarteInput');
+	var filterCenaKarteVInput = $('#filterCenaKarteVInput');
+	var filterCenaKarteNInput = $('#filterCenaKarteNInput');
 	var filterAdminInput = $('#filterAdminInput');
 
 
@@ -25,14 +26,16 @@ $(document).ready(function(){
 		var filterSala = filterSalaInput.val();
 		var filterDatumPrikazivanja = filterDatumPrikazivanjaInput.val();
 		var filterVremePrikazivanja = filterVremePrikazivanjaInput.val();
-		var filterCenaKarte = filterCenaKarteInput.val();
+		var filterCenaKarteV = filterCenaKarteVInput.val();
+		var filterCenaKarteN = filterCenaKarteNInput.val();
 		var filterAdmin = filterAdminInput.val();
 		console.log('filterFilm: ' + filterFilm);
 		console.log('filterTipProjekcije: ' + filterTipProjekcije);
 		console.log('filterSala: ' + filterSala);
 		console.log('filterDatumPrikazivanja: ' + filterDatumPrikazivanja);
 		console.log('filterVremePrikazivanja: ' + filterVremePrikazivanja);
-		console.log('filterCenaKarte: ' + filterCenaKarte);
+		console.log('filterCenaKarteV: ' + filterCenaKarteV);
+		console.log('filterCenaKarteN: ' + filterCenaKarteN);
 		console.log('filterAdmin: ' + filterAdmin);
 		
 		var params = {
@@ -41,7 +44,8 @@ $(document).ready(function(){
 			'filterSala': filterSala,
 			'filterDatumPrikazivanja': filterDatumPrikazivanja,
 			'filterVremePrikazivanja': filterVremePrikazivanja,
-		    'filterCenaKarte': filterCenaKarte,
+		    'filterCenaKarteV': filterCenaKarteV,
+		    'filterCenaKarteN': filterCenaKarteN,
 		    'filterAdmin': filterAdmin
 
 		};
@@ -89,7 +93,13 @@ $(document).ready(function(){
 		return false;
 	});
 
-	filterCenaKarteInput.on('keyup', function(event){
+	filterCenaKarteVInput.on('keyup', function(event){
+		getProjekcije();
+		
+		event.preventDefault();
+		return false;
+	});
+	filterCenaKarteNInput.on('keyup', function(event){
 		getProjekcije();
 		
 		event.preventDefault();

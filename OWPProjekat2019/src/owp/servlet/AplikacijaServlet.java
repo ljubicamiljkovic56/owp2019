@@ -29,29 +29,57 @@ public class AplikacijaServlet extends HttpServlet {
 			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
 			return;
 		}
-		
-		String naziv = request.getParameter("naziv");
-		naziv = (naziv != null? naziv: "");
-		String reziser = request.getParameter("reziser");
-		reziser = (reziser != null? reziser: "");
-		String glumci = request.getParameter("glumci");
-		glumci = (glumci != null? glumci: "");
-		String zanrovi = request.getParameter("zanrovi");
-		zanrovi = (zanrovi != null? zanrovi: "");
-	//	int trajanje = Integer.parseInt(request.getParameter("trajanje"));
-	//	trajanje = (trajanje > 0? trajanje: 0);
-		String distributer = request.getParameter("distributer");
-		distributer = (distributer != null? distributer: "");
-		String zemljaPorekla = request.getParameter("zemljaPorekla");
-		zemljaPorekla = (zemljaPorekla != null? zemljaPorekla: "");
-	//	int godinaProizvodnje = Integer.parseInt(request.getParameter("godinaProizvodnje"));
-	//	godinaProizvodnje = (godinaProizvodnje > 0? godinaProizvodnje: 0);
-		String opis = request.getParameter("opis");
-		opis = (opis != null? opis: "");
 	
+		String naziv = request.getParameter("filterNaziv");
+		naziv = (naziv != null? naziv: "");
+		String reziser = request.getParameter("filterReziser");
+		reziser = (reziser != null? reziser: "");
+		String glumci = request.getParameter("filterGlumci");
+		glumci = (glumci != null? glumci: "");
+		String zanrovi = request.getParameter("filterZanrovi");
+		zanrovi = (zanrovi != null? zanrovi: "");
+		int trajanjeV = 0;
+		try {
+			String filterTrajanjeVString = request.getParameter("filterTrajanjeV");
+			trajanjeV = Integer.parseInt(filterTrajanjeVString);
+			trajanjeV = (trajanjeV > 0? trajanjeV: 0);
+		}catch (Exception ex){}
+		int trajanjeN = 0;
+		try {
+			String filterTrajanjeNString = request.getParameter("filterTrajanjeN");
+			trajanjeN = Integer.parseInt(filterTrajanjeNString);
+			trajanjeN = (trajanjeN > 0? trajanjeN: 0);
+		}catch (Exception ex){}
+		String distributer = request.getParameter("filterDistributer");
+		distributer = (distributer != null? distributer: "");
+		String zemljaPorekla = request.getParameter("filterZemljaPorekla");
+		zemljaPorekla = (zemljaPorekla != null? zemljaPorekla: "");
+		int godinaProizvodnjeV = 0;
+		try {
+			String filterGodinaProizvodnjeVString = request.getParameter("filterGodinaProizvodnjeV");
+			godinaProizvodnjeV = Integer.parseInt(filterGodinaProizvodnjeVString);
+			godinaProizvodnjeV = (godinaProizvodnjeV > 0? godinaProizvodnjeV: 0);
+		}catch (Exception ex){ }
+		int godinaProizvodnjeN = 0;
+		try {
+			String filterGodinaProizvodnjeNString = request.getParameter("filterGodinaProizvodnjeN");
+			godinaProizvodnjeN = Integer.parseInt(filterGodinaProizvodnjeNString);
+			godinaProizvodnjeN = (godinaProizvodnjeN > 0? godinaProizvodnjeN: 0);
+		}catch (Exception ex){ }
+	//	godinaProizvodnje = (godinaProizvodnje > 0? godinaProizvodnje: 0);
+		String opis = request.getParameter("filterOpis");
+		opis = (opis != null? opis: "");
+		
+		
+		int brojSedista = 0;
+		try {
+			String brojSedistaFilter = request.getParameter("brojSedistaFilter");
+			brojSedista = Integer.parseInt(brojSedistaFilter);
+			brojSedista = (brojSedista > 0? brojSedista: 0);
+		}catch (Exception ex){}
 
-		List<Film> filterFilmovi = FilmDAO.getAll();
-		//List<Film> filterFilmovi = FilmDAO.getAllIndex(naziv, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis);
+		//List<Film> filterFilmovi = FilmDAO.getAll();
+		List<Film> filterFilmovi = FilmDAO.getAllIndex(naziv,reziser, glumci, zanrovi, trajanjeV, trajanjeN, distributer, zemljaPorekla, godinaProizvodnjeV, godinaProizvodnjeN, opis);
 
 		Map<String, Object> data = new LinkedHashMap<>();
 		data.put("filterFilmovi", filterFilmovi);
