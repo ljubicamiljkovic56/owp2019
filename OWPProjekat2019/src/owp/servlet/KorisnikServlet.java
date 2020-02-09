@@ -1,6 +1,8 @@
 package owp.servlet;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,7 +34,28 @@ public class KorisnikServlet extends HttpServlet {
 			return;
 		}
 		
-		List<Korisnik> filterKorisnici = KorisnikDAO.getAll();
+		String korisnickoIme = request.getParameter("filterKorisnickoIme");
+		korisnickoIme = (korisnickoIme != null? korisnickoIme: "");
+		//String lozinka = request.getParameter("filterLozinka");
+		//lozinka = (lozinka != null? lozinka: "");
+//		String stringDatumReg = "2020-01-22";
+//		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		java.util.Date date;
+//		try {
+//			date =  dateFormat.parse(stringDatumReg);
+//			System.out.println(date);
+//			java.sql.Date sqlDate = java.sql.Date.valueOf(stringDatumReg);
+//			System.out.println(sqlDate);
+//		}catch (ParseException pex) {
+//			pex.printStackTrace();
+//		}
+//		String datumReg = request.getParameter("filterDatumReg");
+		String ulogaS = request.getParameter("filterUloga");
+		ulogaS = (ulogaS != null? ulogaS: "");
+		
+		//List<Korisnik> filterKorisnici = KorisnikDAO.getAll();
+		
+		List<Korisnik> filterKorisnici = KorisnikDAO.getAllKorisnik(korisnickoIme, ulogaS);
 
 		Map<String, Object> data = new LinkedHashMap<>();
 		data.put("filterKorisnici", filterKorisnici);

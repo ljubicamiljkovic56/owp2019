@@ -19,7 +19,8 @@ $(document).ready(function(){
 	});
 	
 	var filterProjekcijaInput = $('#filterProjekcijaInput');
-	var filterSedisteInput = $('#filterSedisteInput');
+	var filterSedisteVInput = $('#filterSedisteVInput');
+	var filterSedisteNInput = $('#filterSedisteNInput');
 	var filterDatumProdajeInput = $('#filterDatumProdajeInput');
 	var filterVremeProdajeInput = $('#filterVremeProdajeInput');
 	var filterKorisnikInput = $('#filterKorisnikInput');
@@ -28,19 +29,22 @@ $(document).ready(function(){
 
 	function getKarte(){
 		var filterProjekcija = filterProjekcijaInput.val();
-		var filterSediste = filterSedisteInput.val();
+		var filterSedisteV = filterSedisteVInput.val();
+		var filterSedisteN = filterSedisteNInput.val();
 		var filterDatumProdaje = filterDatumProdajeInput.val();
 		var filterVremeProdaje = filterVremeProdajeInput.val();
 		var filterKorisnik = filterKorisnikInput.val();
 		console.log('filterProjekcija: ' + filterProjekcija);
-		console.log('filterSediste:' + filterSediste);
+		console.log('filterSedisteV:' + filterSedisteV);
+		console.log('filterSedisteN:' + filterSedisteN);
 		console.log('filterDatumProdaje: ' + filterDatumProdaje);
 		console.log('filterVremeProdaje: ' + filterVremeProdaje);
 		console.log('filterKorisnik: ' + filterKorisnik);
 
 		var params = {
 			'filterProjekcija ' : filterProjekcija,
-			'filterSedsite': filterSediste,
+			'filterSedsiteV': filterSedisteV,
+			'filterSedisteN': filterSedisteN,
 			'filterDatumProdaje ' : filterDatumProdaje,
 			'filterVremeProdaje' : filterVremeProdaje,
 			'filterKorisnik ' : filterKorisnik
@@ -66,7 +70,13 @@ $(document).ready(function(){
 		event.preventDefault();
 		return false;
 	});
-	filterSedisteInput.on('keyup', function(event){
+	filterSedisteVInput.on('keyup', function(event){
+		getKarte();
+		
+		event.preventDefault();
+		return false;
+	});
+	filterSedisteNInput.on('keyup', function(event){
 		getKarte();
 		
 		event.preventDefault();

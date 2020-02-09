@@ -92,6 +92,72 @@ public class KartaDAO {
 		return karta1;
 	}
 	
+	//pregled karata sa filterima
+	public static List<Karta> getAllKarta(String projekcija, int sedisteV, int sedisteN, String datumProdaje, String vremeProdaje, String korisnik){
+		List<Karta> karte = new ArrayList<>();
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM karta WHERE projekcija LIKE ? AND datumProdaje LIKE ? AND vremeProdaje LIKE ? AND korisnik LIKE ? ";
+			
+			if (sedisteV > 0) {
+				query += " AND sediste >= ?";
+			}
+			if (sedisteN > 0) {
+				query += " AND sediste <= ?";
+			}
+			
+			
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setString(index++, "%" + projekcija + "%");
+			pstmt.setString(index++, datumProdaje + "%");
+			pstmt.setString(index++, vremeProdaje + "%");
+			pstmt.setString(index++, korisnik + "%");
+			
+			if (sedisteV > 0) {
+				pstmt.setInt(index++, sedisteV);
+			}
+			if (sedisteN > 0) {
+				pstmt.setInt(index++, sedisteN);
+			}
+			
+			rset = pstmt.executeQuery();
+			
+			System.out.println("nakon execute query");
+			System.out.println(query);
+			
+			while(rset.next()) {
+				int id = rset.getInt("id");
+				String projekcija1 = rset.getString("projekcija");
+				int sediste1 = rset.getInt("sediste");
+				Date datumProdaje1 = rset.getDate("datumProdaje");
+				String vremeProdaje1 = rset.getString("vremeProdaje");
+				String korisnik1 = rset.getString("korisnik");
+				
+				Karta karta = new Karta(id, projekcija1, sediste1, datumProdaje1, vremeProdaje1, korisnik1);
+				karta.setId(id);
+				karta.setProjekcija(projekcija1);
+				karta.setSediste(sediste1);
+				karta.setDatumProdaje(datumProdaje1);
+				karta.setVremeProdaje(vremeProdaje1);
+				karta.setKorisnik(korisnik1);
+				karte.add(karta);
+				
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		}
+		return karte;
+		
+	}
+	
 	
 	//pregled karata
 	public static List<Karta> getAll() {

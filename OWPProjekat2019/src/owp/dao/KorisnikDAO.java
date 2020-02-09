@@ -157,7 +157,72 @@ public class KorisnikDAO {
 		return null;
 	}
 
-	//prikaz svih korisnika kod admina
+	//prikaz svih korisnika kod admina sa filterom
+	public static List<Korisnik> getAllKorisnik(String korisnickoIme, String ulogaS){
+		
+		List<Korisnik> korisnici = new ArrayList<>();
+		
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		try {
+			String query = "SELECT * FROM korisnik WHERE korisnickoIme LIKE ? AND uloga LIKE ? ";
+			
+			
+			
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setString(index++, "%" + korisnickoIme + "%");
+			//pstmt.setString(index++, lozinka + "%");
+			//pstmt.setString(index++, datumReg + "%");
+			pstmt.setString(index++, ulogaS + "%");
+			
+
+//			
+//			if (!datumReg.equals("")) {
+//				pstmt.setString(index++, datumReg + "%");
+//			}
+//			
+			System.out.println(pstmt);
+			System.out.println(pstmt + " evo statementa");
+
+			rset = pstmt.executeQuery();
+			
+			System.out.println(pstmt.executeQuery() + "  jel ovo execute query");
+
+			System.out.println("nakon execute query");
+			System.out.println(query);
+			
+			while(rset.next()) {
+				int id = rset.getInt("id");
+				String korisnickoImeK = rset.getString("korisnickoIme");
+				String lozinkaK = rset.getString("lozinka");
+				Date datumRegK = rset.getDate("datumReg");
+				Uloga ulogaK = Uloga.valueOf(rset.getString("uloga"));
+				
+				Korisnik korisnik = new Korisnik(id, korisnickoImeK, lozinkaK, datumRegK, ulogaK);
+				korisnik.setId(id);
+				korisnik.setKorisnickoIme(korisnickoImeK);
+				korisnik.setLozinka(lozinkaK);
+				korisnik.setDatumReg(datumRegK);
+				korisnik.setUloga(ulogaK);
+				korisnici.add(korisnik);
+			}
+			System.out.println("Ispis....");
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		}
+		
+		return korisnici;
+	}
+	
+	//prikaz svih korisnika kod admina bez filtera
 	public static List<Korisnik> getAll(){
 		List<Korisnik> korisnici = new ArrayList<>();
 		

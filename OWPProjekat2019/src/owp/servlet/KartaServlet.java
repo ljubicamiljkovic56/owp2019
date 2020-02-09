@@ -1,6 +1,8 @@
 package owp.servlet;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,7 +33,41 @@ public class KartaServlet extends HttpServlet {
 			return;
 		}
 		
+		String projekcija = request.getParameter("projekcija");
+		projekcija = (projekcija != null? projekcija: "");
+		int sedisteV = 0;
+		try {
+			String filterSedisteVString = request.getParameter("filterSediste");
+			sedisteV = Integer.parseInt(filterSedisteVString);
+			sedisteV = (sedisteV > 0? sedisteV: 0);
+		}catch (Exception e) {}
+		int sedisteN = 0;
+		try {
+			String filterSedisteNString = request.getParameter("filterSediste");
+			sedisteN = Integer.parseInt(filterSedisteNString);
+			sedisteN = (sedisteN > 0? sedisteN: 0);
+		}catch (Exception e) {}
+		String stringDatumProdaje = "2020-01-22";
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date;
+		try {
+			date =  dateFormat.parse(stringDatumProdaje);
+			System.out.println(date);
+			java.sql.Date sqlDate = java.sql.Date.valueOf(stringDatumProdaje);
+			System.out.println(sqlDate);
+		}catch (ParseException pex) {
+			pex.printStackTrace();
+		}
+		String datumProdaje = request.getParameter("datumProdaje");
+		String vremeProdaje = request.getParameter("vremeProdaje");
+		vremeProdaje = (vremeProdaje != null? vremeProdaje: "");
+		String korisnik = request.getParameter("korisnik");
+		korisnik = (korisnik != null? korisnik: "");
+		
+		
 		List<Karta> filterKarte = KartaDAO.getAll();
+		//List<Karta> filterKarte = KartaDAO.getAllKarta(projekcija, sedisteV, sedisteN, datumProdaje, vremeProdaje, korisnik);
+				
 		
 		Map<String, Object> data = new LinkedHashMap<>();
 		data.put("filterKarte", filterKarte);
