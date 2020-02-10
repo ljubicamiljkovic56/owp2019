@@ -122,7 +122,6 @@ public class KorisnikDAO {
 	}
 	
 	//get po korisnickom imenu kod provere da li vec postoji korisnicko ime pri registraciji
-	// i pri logovanju
 	public static Korisnik get(String korisnickoIme) {
 		Connection conn = ConnectionManager.getConnection();
 
@@ -159,9 +158,7 @@ public class KorisnikDAO {
 
 	//prikaz svih korisnika kod admina sa filterom
 	public static List<Korisnik> getAllKorisnik(String korisnickoIme, String ulogaS){
-		
 		List<Korisnik> korisnici = new ArrayList<>();
-		
 		Connection conn = ConnectionManager.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -169,28 +166,22 @@ public class KorisnikDAO {
 		try {
 			String query = "SELECT * FROM korisnik WHERE korisnickoIme LIKE ? AND uloga LIKE ? ";
 			
-			
-			
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
 			pstmt.setString(index++, "%" + korisnickoIme + "%");
 			//pstmt.setString(index++, lozinka + "%");
 			//pstmt.setString(index++, datumReg + "%");
 			pstmt.setString(index++, ulogaS + "%");
-			
-
 //			
 //			if (!datumReg.equals("")) {
 //				pstmt.setString(index++, datumReg + "%");
 //			}
-//			
 			System.out.println(pstmt);
 			System.out.println(pstmt + " evo statementa");
 
 			rset = pstmt.executeQuery();
 			
 			System.out.println(pstmt.executeQuery() + "  jel ovo execute query");
-
 			System.out.println("nakon execute query");
 			System.out.println(query);
 			

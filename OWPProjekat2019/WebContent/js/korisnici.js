@@ -31,9 +31,9 @@ $(document).ready(function(){
 		console.log('filterUloga: ' + filterUloga);
 
 		var params = {
-			'filterKorisnickoIme ' : filterKorisnickoIme,
-			'filterDatumReg ' : filterDatumReg,
-			'filterUloga ' : filterUloga
+			'filterKorisnickoIme' : filterKorisnickoIme,
+			'filterDatumReg' : filterDatumReg,
+			'filterUloga' : filterUloga
 
 		};
 		$.get('KorisnikServlet', params, function(data){

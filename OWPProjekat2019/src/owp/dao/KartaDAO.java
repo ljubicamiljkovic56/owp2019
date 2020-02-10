@@ -49,7 +49,7 @@ public class KartaDAO {
 		
 		return karta;
 	}
-	
+	//u KorisnikovaKartaServlet pozivamo da dobijemo kartu/karte logovanog korisnika
 	public static List<Karta> getKorisnikovaKarta(String korisnik) {
 		Connection conn = ConnectionManager.getConnection();
 		List<Karta> karta1 = new ArrayList<>();

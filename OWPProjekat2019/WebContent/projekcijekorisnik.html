@@ -3,7 +3,7 @@
 <meta charset="UTF-8">
 <title>Projekcije</title>
 <script src="js/jquery-3.3.1.js"></script>
-<script src="js/projekcijeadmin.js"></script>
+<script src="js/projekcijekorisnik.js"></script>
 <link rel="shortcut icon" href="favicon.ico">
 </head>
 <body>
@@ -16,7 +16,6 @@
 		<th><a id="sortDatumPrikazivanja">DatumPrikazivanja</a></th>
 		<th><a id="sortVremePrikazivanja">VremePrikazivanja</a></th>
 		<th><a id="sortCenaKarte">CenaKarte</a></th>
-		<th><a id="sortAdmin">Admin</a></th>
 		<th/>
 		</tr>
 		<tr bgcolor="lightblue">
@@ -24,16 +23,22 @@
 			<td align="center"><input type="text" id="filterTipProjekcijeInput"></td>
 			<td align="center"><input type="text" id="filterSalaInput"></td>
 			<td align="center"><input type="text" id="filterDatumPrikazivanjaInput"></td>
+<!-- 			<td align="center"> -->
+<!-- 				od:&nbsp;<input type="text" id="filterDatumPrikazivanjaVInput"><br/> -->
+<!-- 				do:&nbsp;<input type="text" id="filterDatumPrikazivanjaNInput"> -->
+<!-- 			</td> -->
+<!-- 			<td align="center"> -->
+<!-- 				od:&nbsp;<input type="text" id="filterVremePrikazivanjaVInput"><br/> -->
+<!-- 				do:&nbsp;<input type="text" id="filterVremePrikazivanjaNInput"> -->
+<!-- 			</td> -->
 			<td align="center"><input type="text" id="filterVremePrikazivanjaInput"></td>
 			<td align="center">
 				od:&nbsp;<input type="text" id="filterCenaKarteVInput"><br/>
 				do:&nbsp;<input type="text" id="filterCenaKarteNInput">
 			</td>
-			<td align="center"><input type="text" id="filterAdminInput"></td>
 			<td/>
 		</tr>
 	</table>	
-	<p><a href="dodajprojekciju.html">Dodaj projekciju</a></p>
 	<p><a href="aplikacija.html">Povratak na glavnu stranu</a></p>
 	<p><a href="glavna.html" id="logoutLink">Odjava</a></p>
 </body>
